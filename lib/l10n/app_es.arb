@@ -1,0 +1,213 @@
+{
+  "@@locale": "es",
+  "appName": "SneakHub",
+  "welcome": "Bienvenido a SneakHub",
+  "loginSubtitle": "Ingresa tus credenciales para continuar",
+  "login": "Iniciar sesión",
+  "logout": "Cerrar sesión",
+  "email": "Correo electrónico",
+  "password": "Contraseña",
+  "emailRequired": "El correo es obligatorio",
+  "emailInvalid": "Ingresa un correo válido",
+  "passwordRequired": "La contraseña es obligatoria",
+  "passwordMin": "Mínimo 4 caracteres",
+  "completeFields": "Por favor completa todos los campos",
+  "noAccount": "¿No tienes cuenta? Regístrate",
+  "haveAccount": "¿Ya tienes cuenta? Inicia sesión",
+  "createAccount": "Crear cuenta",
+  "registerSubtitle": "Regístrate para comprar tus tenis favoritos",
+  "register": "Registrarme",
+  "confirmPassword": "Confirmar contraseña",
+  "passwordsDontMatch": "Las contraseñas no coinciden",
+  "home": "Inicio",
+  "sneakers": "Tenis",
+  "sneaker": "Tenis",
+  "catalog": "Catálogo",
+  "brands": "Marcas",
+  "brand": "Marca",
+  "categories": "Categorías",
+  "category": "Categoría",
+  "orders": "Pedidos",
+  "myOrders": "Mis pedidos",
+  "cart": "Carrito",
+  "profile": "Perfil",
+  "language": "Idioma",
+  "theme": "Tema",
+  "settings": "Preferencias",
+  "darkMode": "Modo oscuro",
+  "roleAdmin": "Administrador",
+  "roleCustomer": "Cliente",
+  "hello": "Hola, {name}",
+  "@hello": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardSubtitle": "Este es el resumen de tu tienda",
+  "customerSubtitle": "Encuentra tu próximo par de tenis",
+  "lowStock": "Stock bajo",
+  "lowStockTitle": "Stock bajo (5 o menos)",
+  "stockOk": "Todo el catálogo tiene stock suficiente",
+  "pendingOrders": "Pedidos pendientes",
+  "sales": "Ventas",
+  "recentOrders": "Pedidos recientes",
+  "newArrivals": "Novedades",
+  "seeAll": "Ver todo",
+  "goToCatalog": "Ver catálogo",
+  "searchSneakers": "Buscar tenis por nombre",
+  "all": "Todas",
+  "clearFilters": "Quitar filtros",
+  "noSneakers": "No hay tenis que coincidan",
+  "newSneaker": "Nuevo tenis",
+  "editSneaker": "Editar tenis",
+  "outOfStock": "Agotado",
+  "unitsLeft": "Quedan {count}",
+  "@unitsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "inStock": "{count} disponibles",
+  "@inStock": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "sizes": "Tallas",
+  "size": "Talla",
+  "quantity": "Cantidad",
+  "chooseSize": "Elige una talla",
+  "addToCart": "Agregar al carrito",
+  "addedToCart": "Agregado al carrito",
+  "viewCart": "Ver carrito",
+  "alreadyInCart": "Ya tienes {count} en el carrito",
+  "@alreadyInCart": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "notEnoughStock": "No hay suficiente stock (disponibles: {count})",
+  "@notEnoughStock": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "genderMen": "Hombre",
+  "genderWomen": "Mujer",
+  "genderUnisex": "Unisex",
+  "deleteSneaker": "Eliminar tenis",
+  "deleteSneakerConfirm": "¿Seguro que quieres eliminar \"{name}\"? Esta acción no se puede deshacer.",
+  "@deleteSneakerConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "sneakerDeleted": "Tenis eliminado",
+  "sneakerSaved": "Tenis guardado",
+  "sneakerCount": "{count, plural, =0{Sin tenis} =1{1 tenis} other{{count} tenis}}",
+  "@sneakerCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "name": "Nombre",
+  "price": "Precio",
+  "stock": "Stock",
+  "gender": "Género",
+  "colors": "Colores",
+  "colorsHint": "Ej: Blanco, Negro",
+  "description": "Descripción",
+  "images": "Imágenes",
+  "imageUrl": "URL de la imagen",
+  "addImage": "Agregar",
+  "noImages": "Sin imágenes. Agrega al menos una URL para que se vea en el catálogo.",
+  "sizesRequired": "Elige al menos una talla",
+  "priceInvalid": "Debe ser mayor a 0",
+  "requiredField": "Campo obligatorio",
+  "optional": "Opcional",
+  "logoUrl": "URL del logo",
+  "save": "Guardar",
+  "cancel": "Cancelar",
+  "edit": "Editar",
+  "delete": "Eliminar",
+  "retry": "Reintentar",
+  "newBrand": "Nueva marca",
+  "brandCreated": "Marca creada",
+  "noBrands": "Aún no hay marcas",
+  "newCategory": "Nueva categoría",
+  "categoryCreated": "Categoría creada",
+  "noCategories": "Aún no hay categorías",
+  "orderNumber": "Pedido #{id}",
+  "@orderNumber": {
+    "placeholders": {
+      "id": {
+        "type": "int"
+      }
+    }
+  },
+  "noOrders": "No hay pedidos",
+  "noOrdersCustomer": "Todavía no has hecho ningún pedido",
+  "unitCount": "{count, plural, =1{1 unidad} other{{count} unidades}}",
+  "@unitCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "products": "Productos",
+  "total": "Total",
+  "changeStatus": "Cambiar estado",
+  "statusUpdated": "Estado actualizado: {status}",
+  "@statusUpdated": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "cancelOrder": "Cancelar pedido",
+  "cancelOrderConfirm": "Al cancelar, el stock vuelve al catálogo y el pedido ya no podrá cambiar de estado.",
+  "orderCancelledInfo": "Este pedido está cancelado y ya no puede cambiar de estado.",
+  "orderCancelledNotice": "Pedido cancelado. El stock fue devuelto al catálogo.",
+  "statusPending": "Pendiente",
+  "statusPaid": "Pagado",
+  "statusShipped": "Enviado",
+  "statusDelivered": "Entregado",
+  "statusCancelled": "Cancelado",
+  "cartEmpty": "Tu carrito está vacío",
+  "checkout": "Finalizar compra",
+  "orderCreated": "¡Pedido creado!",
+  "errorUnauthorized": "Tu sesión no es válida. Vuelve a iniciar sesión.",
+  "errorForbidden": "No tienes permiso para hacer esto.",
+  "errorServer": "Error del servidor: {status}",
+  "@errorServer": {
+    "placeholders": {
+      "status": {
+        "type": "int"
+      }
+    }
+  },
+  "errorTimeout": "Tiempo de conexión agotado.",
+  "errorNetwork": "No se pudo conectar con la API. ¿Está encendida?",
+  "errorUnexpected": "Ocurrió un error inesperado.",
+  "heroTag": "Nueva temporada",
+  "heroTitle": "ENCUENTRA\nTU PRÓXIMO\nPAR.",
+  "heroSubtitle": "Las mejores marcas de tenis en un solo lugar: running, basketball, skate y lifestyle.",
+  "heroBrands": "NIKE · ADIDAS · PUMA · NEW BALANCE · CONVERSE · VANS",
+  "adminTag": "Panel de administración"
+}

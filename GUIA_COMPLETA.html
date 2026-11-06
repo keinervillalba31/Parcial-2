@@ -1,0 +1,1403 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guía SneakHub completa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,600;0,800;0,900;1,900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f3ef; --surface:#ffffff; --surface-2:#ebe9e3; --text:#141414; --muted:#5e5c56;
+  --border:#dddad3; --accent:#e8501a; --accent-soft:#fde5da; --ink:#111111;
+  --ok:#1f7a4d; --ok-soft:#dcf1e6; --warn:#9a5b00; --warn-soft:#fbefd9; --info:#1d5fa8; --info-soft:#dfeafa;
+  --code-bg:#17171a; --code-text:#e8e6e1;
+  --k:#ff9e64; --s:#a8d99a; --c:#8a8f98; --t:#7fb6ff; --a:#f5c86b; --n:#d8a8ff;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e0e0e; --surface:#171717; --surface-2:#222222; --text:#efede8; --muted:#a3a19b;
+    --border:#2e2d2a; --accent:#ff6b35; --accent-soft:#3a1d10; --ink:#efede8;
+    --ok:#5fd39a; --ok-soft:#10301f; --warn:#f2b350; --warn-soft:#33260e; --info:#7fb6ff; --info-soft:#13253d;
+    --code-bg:#0a0a0b;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e0e0e; --surface:#171717; --surface-2:#222222; --text:#efede8; --muted:#a3a19b;
+  --border:#2e2d2a; --accent:#ff6b35; --accent-soft:#3a1d10; --ink:#efede8;
+  --ok:#5fd39a; --ok-soft:#10301f; --warn:#f2b350; --warn-soft:#33260e; --info:#7fb6ff; --info-soft:#13253d;
+  --code-bg:#0a0a0b;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:16px;overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+h1,h2,h3,h4{font-family:Archivo,Inter,sans-serif;line-height:1.15;letter-spacing:-.01em}
+h2{font-size:1.9rem;font-weight:900;margin:0 0 .4em}
+h3{font-size:1.25rem;font-weight:800;margin:1.8em 0 .5em}
+h4{font-size:1.02rem;font-weight:800;margin:1.4em 0 .4em}
+p{margin:.6em 0}
+code,pre{font-variant-ligatures:none}
+code{font-family:"JetBrains Mono",monospace;font-size:.86em;background:var(--surface-2);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+pre{background:var(--code-bg);color:var(--code-text);padding:16px 18px;border-radius:12px;overflow-x:auto;font:13.5px/1.6 "JetBrains Mono",monospace;margin:.9em 0}
+pre code{background:none;padding:0;font-size:inherit;color:inherit;overflow-wrap:normal}
+pre .k{color:var(--k)} pre .s{color:var(--s)} pre .c{color:var(--c);font-style:italic} pre .t{color:var(--t)} pre .a{color:var(--a)} pre .n{color:var(--n)}
+.file{display:block;font:600 12px "JetBrains Mono",monospace;color:var(--muted);margin:1.2em 0 -.5em}
+table{border-collapse:collapse;width:100%;margin:.9em 0;font-size:.93rem;background:var(--surface);border-radius:10px;overflow:hidden}
+th,td{border-bottom:1px solid var(--border);padding:9px 12px;text-align:left;vertical-align:top}
+th{background:var(--surface-2);font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.04em}
+tr:last-child td{border-bottom:none}
+.tw{overflow-x:auto}
+ul,ol{padding-left:1.3em} li{margin:.25em 0}
+
+/* Layout */
+.top{background:var(--ink);color:#fff;padding:56px 16px 48px;position:relative;overflow:hidden}
+:root[data-theme="dark"] .top{background:#000}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .top{background:#000}}
+.top-in{max-width:1180px;margin:0 auto;position:relative;z-index:1}
+.logo{font:italic 900 26px Archivo;letter-spacing:-1px;color:#fff}.logo b{color:#ff5a1f;font-weight:900}
+.top h1{font-size:clamp(2.2rem,6vw,4.4rem);font-weight:900;margin:.35em 0 .2em;color:#fff;line-height:.98}
+.top p{color:#cfcdc7;max-width:720px;font-size:1.08rem}
+.stripes{position:absolute;right:-80px;bottom:30px;transform:rotate(-20deg);display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.stripes i{display:block;height:26px;border-radius:20px;background:#ff5a1f}
+.stripes i:nth-child(1){width:460px}.stripes i:nth-child(2){width:360px;opacity:.5}.stripes i:nth-child(3){width:260px;opacity:.25}
+.tag{display:inline-block;background:#ff5a1f;color:#fff;font:800 11px Inter;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:6px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px;display:grid;grid-template-columns:1fr;gap:32px}
+@media (min-width:1000px){.wrap{grid-template-columns:260px 1fr}}
+nav.toc{font-size:.9rem}
+@media (min-width:1000px){nav.toc{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto;padding:24px 0}}
+nav.toc details{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:12px 16px;margin-top:20px}
+@media (min-width:1000px){nav.toc details{margin-top:0}}
+nav.toc summary{font:800 1rem Archivo;cursor:pointer}
+nav.toc .part{font:800 11px Inter;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);margin:14px 0 4px}
+nav.toc a{display:block;color:var(--text);text-decoration:none;padding:3px 0;opacity:.85}
+nav.toc a:hover{opacity:1;color:var(--accent)}
+main{min-width:0;padding:24px 0 80px}
+section{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px clamp(18px,3vw,36px);margin-bottom:22px}
+.part-title{font:900 clamp(1.6rem,4vw,2.6rem) Archivo;margin:48px 0 18px;display:flex;align-items:center;gap:14px}
+.part-title:first-child{margin-top:8px}
+.part-title span{font:800 12px Inter;letter-spacing:1.4px;background:var(--accent);color:#fff;padding:5px 10px;border-radius:6px}
+.lead{font-size:1.07rem;color:var(--muted)}
+
+/* Callouts */
+.box{border-radius:12px;padding:14px 16px;margin:1em 0;border-left:4px solid}
+.box b:first-child{display:block;margin-bottom:2px}
+.idea{background:var(--accent-soft);border-color:var(--accent)}
+.ok{background:var(--ok-soft);border-color:var(--ok)}
+.warn{background:var(--warn-soft);border-color:var(--warn)}
+.info{background:var(--info-soft);border-color:var(--info)}
+.exam{background:var(--surface-2);border-color:var(--ink)}
+.exam::before{content:"🎓 Para el parcial";display:block;font:800 12px Inter;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+
+/* Diagrams */
+.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin:1.2em 0}
+.node{flex:1 1 150px;background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:12px 14px;min-width:0}
+.node h5{margin:0 0 4px;font:800 .95rem Archivo}
+.node small{display:block;color:var(--muted);font-size:.82rem;line-height:1.45}
+.node.dark{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.node.dark small{color:var(--bg);opacity:.75}
+.node.hot{background:var(--accent);color:#fff;border-color:var(--accent)}
+.node.hot small{color:#fff;opacity:.9}
+.arrow{align-self:center;font:900 1.4rem Archivo;color:var(--accent);flex:0 0 auto}
+.node.dark code,.node.hot code{background:rgba(255,255,255,.2);color:inherit}
+@media (max-width:640px){.flow{flex-direction:column}.node{flex:0 0 auto}.arrow{transform:rotate(90deg);align-self:center}}
+.steps{counter-reset:s;list-style:none;padding:0}
+.steps>li{counter-increment:s;position:relative;padding:10px 0 10px 48px;border-bottom:1px dashed var(--border)}
+.steps>li:last-child{border-bottom:none}
+.steps>li::before{content:counter(s);position:absolute;left:0;top:9px;width:32px;height:32px;border-radius:50%;background:var(--ink);color:var(--bg);font:800 14px Archivo;display:grid;place-items:center}
+.grid2{display:grid;grid-template-columns:1fr;gap:14px}
+@media (min-width:760px){.grid2{grid-template-columns:1fr 1fr}}
+.card{background:var(--surface-2);border-radius:14px;padding:14px 16px}
+.card h4{margin-top:0}
+.pill{display:inline-block;font:700 11px "JetBrains Mono",monospace;padding:2px 8px;border-radius:20px;background:var(--surface-2);border:1px solid var(--border)}
+.m-get{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.m-post{background:var(--info-soft);color:var(--info);border-color:transparent}
+.m-put,.m-patch{background:var(--warn-soft);color:var(--warn);border-color:transparent}
+.m-del{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+
+/* Q&A */
+details.q{border:1px solid var(--border);border-radius:12px;padding:0 16px;margin:8px 0;background:var(--surface)}
+details.q summary{cursor:pointer;font-weight:700;padding:13px 0;list-style:none}
+details.q summary::-webkit-details-marker{display:none}
+details.q summary::before{content:"+";display:inline-block;width:22px;color:var(--accent);font-weight:900}
+details.q[open] summary::before{content:"–"}
+details.q div{padding:0 0 14px 22px;color:var(--text)}
+
+/* ER */
+.er{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:1em 0}
+.tbl{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--surface)}
+.tbl h5{margin:0;padding:8px 12px;background:var(--ink);color:var(--bg);font:800 .9rem "JetBrains Mono",monospace}
+.tbl ul{list-style:none;margin:0;padding:8px 12px;font:12.5px/1.7 "JetBrains Mono",monospace}
+.tbl .pk{color:var(--accent);font-weight:700}.tbl .fk{color:var(--info);font-weight:700}
+
+.theme-btn{position:fixed;right:16px;bottom:16px;z-index:10;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:30px;padding:10px 14px;font:700 13px Inter;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:0 16px 60px}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="stripes" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="top-in">
+    <div class="logo">SNEAK<b>HUB</b></div>
+    <h1>EL PROYECTO,<br>DE PUNTA A PUNTA.</h1>
+    <p>Guía para entender todo SneakHub y aprender de paso <strong>Spring Boot</strong> (la API) y <strong>Flutter</strong> (la app), con preguntas tipo parcial al final. Asume que sabes Java, pero no Spring.</p>
+    <span class="tag">Parcial 2 · Spring Boot 4 + Flutter 3</span>
+  </div>
+</header>
+
+<div class="wrap">
+<nav class="toc">
+  <details open>
+    <summary>Contenido</summary>
+    <div class="part">Panorama</div>
+    <a href="#vision">1. Qué es el proyecto</a>
+    <a href="#viaje">2. Una compra de punta a punta</a>
+    <div class="part">Spring Boot (la API)</div>
+    <a href="#spring">3. Qué es Spring y Spring Boot</a>
+    <a href="#ioc">4. Beans e inyección de dependencias</a>
+    <a href="#mvc">5. ¿Es MVC? Las capas</a>
+    <a href="#arranque">6. Qué pasa al arrancar</a>
+    <a href="#pom">7. pom.xml y Maven</a>
+    <a href="#props">8. application.properties</a>
+    <a href="#bd">9. La base de datos (¿quién la creó?)</a>
+    <a href="#entidades">10. Entidades (JPA / Hibernate)</a>
+    <a href="#repos">11. Repositorios</a>
+    <a href="#dtos">12. DTOs y validación</a>
+    <a href="#servicios">13. Servicios y transacciones</a>
+    <a href="#controllers">14. Controllers y endpoints</a>
+    <a href="#errores">15. Manejo de errores</a>
+    <a href="#seguridad">16. Seguridad, JWT y roles</a>
+    <a href="#seeder">17. DataSeeder</a>
+    <a href="#recorrido-spring">18. Una petición, clase por clase</a>
+    <div class="part">Flutter (la app)</div>
+    <a href="#flutter">19. Qué es Flutter</a>
+    <a href="#carpetas">20. Estructura de lib/</a>
+    <a href="#main">21. main.dart</a>
+    <a href="#consumo">22. Cómo se consume la API</a>
+    <a href="#storage">23. Dónde se guarda el token</a>
+    <a href="#riverpod">24. Estado con Riverpod</a>
+    <a href="#router">25. Navegación con go_router</a>
+    <a href="#pantallas">26. Pantallas y componentes</a>
+    <a href="#formularios">27. Formularios y validación</a>
+    <a href="#tema">28. Tema, idiomas y responsive</a>
+    <a href="#recorrido-flutter">29. Comprar, widget por widget</a>
+    <div class="part">Parcial</div>
+    <a href="#correr">30. Cómo correr y probar</a>
+    <a href="#preguntas">31. Preguntas del profesor</a>
+    <a href="#glosario">32. Glosario</a>
+    <a href="#chuleta">33. Chuleta de anotaciones</a>
+  </details>
+</nav>
+
+<main>
+
+<!-- ============================ PANORAMA ============================ -->
+<h2 class="part-title"><span>PARTE 0</span>Panorama</h2>
+
+<section id="vision">
+<h2>1. Qué es el proyecto</h2>
+<p class="lead">SneakHub es una tienda de tenis con dos roles: el <strong>cliente</strong> mira el catálogo, arma un carrito y compra; el <strong>administrador</strong> gestiona tenis, marcas, categorías y el estado de los pedidos.</p>
+
+<p>Está hecho con tres piezas separadas que hablan entre sí:</p>
+<div class="flow">
+  <div class="node hot"><h5>App Flutter</h5><small>Carpeta <code>lib/</code>. Lo que ve el usuario: pantallas, botones, carrito. Corre en Chrome, Android o escritorio.</small></div>
+  <div class="arrow">⇄</div>
+  <div class="node dark"><h5>API Spring Boot</h5><small>Carpeta <code>api/</code>. Recibe peticiones HTTP, aplica las reglas del negocio y responde JSON. Puerto 8081.</small></div>
+  <div class="arrow">⇄</div>
+  <div class="node"><h5>Base de datos H2</h5><small>Archivo <code>api/data/sneakhub.mv.db</code>. Guarda usuarios, tenis, pedidos… Solo la API la toca.</small></div>
+</div>
+
+<p>La app <strong>nunca</strong> toca la base de datos directamente. Siempre le pide las cosas a la API por HTTP, por ejemplo <code>GET http://localhost:8081/api/v1/sneakers</code>, y la API responde con JSON. Esta separación se llama <strong>arquitectura cliente-servidor</strong>, y la API es una <strong>API REST</strong>.</p>
+
+<div class="grid2">
+  <div class="card"><h4>Lo que hace el cliente</h4><ul>
+    <li>Registrarse e iniciar sesión</li>
+    <li>Ver el catálogo con búsqueda y filtros (marca, categoría, género)</li>
+    <li>Ver el detalle de un tenis, elegir talla y cantidad</li>
+    <li>Carrito con validación de stock</li>
+    <li>Comprar (crear pedido) y ver sus pedidos</li>
+  </ul></div>
+  <div class="card"><h4>Lo que hace el admin</h4><ul>
+    <li>Panel con estadísticas (ventas, stock bajo, pendientes)</li>
+    <li>Crear, editar y borrar tenis</li>
+    <li>Crear marcas y categorías</li>
+    <li>Ver <em>todos</em> los pedidos y cambiar su estado</li>
+    <li>Cancelar un pedido devuelve el stock</li>
+  </ul></div>
+</div>
+
+<h3>Tecnologías y para qué sirve cada una</h3>
+<div class="tw"><table>
+<tr><th>Tecnología</th><th>Dónde</th><th>Para qué</th></tr>
+<tr><td>Java 17+</td><td>API</td><td>El lenguaje de la API.</td></tr>
+<tr><td>Spring Boot 4.1</td><td>API</td><td>Framework que arma el servidor web, conecta la BD, maneja seguridad, etc.</td></tr>
+<tr><td>Spring Data JPA + Hibernate</td><td>API</td><td>Guardar y leer objetos Java en la BD sin escribir SQL a mano.</td></tr>
+<tr><td>Spring Security + JWT</td><td>API</td><td>Login, tokens y permisos por rol.</td></tr>
+<tr><td>H2</td><td>API</td><td>Base de datos SQL que vive dentro de la API (en un archivo).</td></tr>
+<tr><td>Maven (<code>mvnw</code>)</td><td>API</td><td>Descarga librerías, compila y ejecuta.</td></tr>
+<tr><td>Dart + Flutter 3</td><td>App</td><td>Lenguaje y framework de la interfaz.</td></tr>
+<tr><td>Dio</td><td>App</td><td>Cliente HTTP: hace las peticiones a la API.</td></tr>
+<tr><td>Riverpod</td><td>App</td><td>Manejo de estado: guarda datos y avisa a las pantallas cuando cambian.</td></tr>
+<tr><td>go_router</td><td>App</td><td>Navegación entre pantallas por URL y protección de rutas.</td></tr>
+<tr><td>flutter_secure_storage / shared_preferences</td><td>App</td><td>Guardar el token (seguro) y las preferencias (tema, idioma).</td></tr>
+</table></div>
+</section>
+
+<section id="viaje">
+<h2>2. Una compra de punta a punta</h2>
+<p class="lead">Antes de entrar al detalle, este es el recorrido completo cuando el cliente pulsa “Comprar”. Cada paso se explica más adelante.</p>
+<ol class="steps">
+  <li><strong>Flutter (pantalla):</strong> <code>CartScreen</code> llama a <code>OrderService.create(items)</code>.</li>
+  <li><strong>Flutter (servicio):</strong> el servicio usa Dio para enviar <code>POST /api/v1/orders</code> con el JSON <code>{"items":[{"sneakerId":1,"size":40,"quantity":2}]}</code>.</li>
+  <li><strong>Flutter (interceptor):</strong> antes de salir, el interceptor le pega el encabezado <code>Authorization: Bearer &lt;token&gt;</code>.</li>
+  <li><strong>Spring Security:</strong> la petición pasa por la cadena de filtros, que valida la firma y la fecha del JWT. Si está mal, responde 401 y nunca llega al controller.</li>
+  <li><strong>Controller:</strong> <code>OrderController.create()</code> recibe el JSON ya convertido en un objeto Java (<code>OrderRequest</code>), lo valida con <code>@Valid</code> y llama al servicio.</li>
+  <li><strong>Service:</strong> <code>OrderService.create()</code> busca el usuario y los tenis, valida talla y stock, crea el pedido y descuenta el stock, todo dentro de una <strong>transacción</strong>.</li>
+  <li><strong>Repository:</strong> <code>orders.save(order)</code>, y Hibernate genera los <code>INSERT</code> / <code>UPDATE</code> en H2.</li>
+  <li><strong>Respuesta:</strong> el servicio convierte la entidad en un DTO (<code>OrderResponse</code>), Spring lo convierte en JSON y responde <code>201 Created</code>.</li>
+  <li><strong>Flutter:</strong> <code>Order.fromJson()</code> convierte el JSON en un objeto Dart, se vacía el carrito, se recargan los datos y se navega al detalle del pedido.</li>
+</ol>
+</section>
+
+<!-- ============================ SPRING ============================ -->
+<h2 class="part-title"><span>PARTE 1</span>Spring Boot</h2>
+
+<section id="spring">
+<h2>3. Qué es Spring y Spring Boot</h2>
+<p><strong>Spring</strong> es un <em>framework</em> de Java para hacer aplicaciones de servidor. La diferencia entre una librería y un framework es clave:</p>
+<div class="grid2">
+  <div class="card"><h4>Librería</h4><p>Tú la llamas. Ejemplo: <code>Math.max(a, b)</code>. Tu código manda.</p></div>
+  <div class="card"><h4>Framework</h4><p>Él te llama a ti. Tú escribes clases con ciertas anotaciones y Spring decide cuándo crearlas y cuándo ejecutar sus métodos. A eso se le llama <strong>Inversión de Control (IoC)</strong>.</p></div>
+</div>
+<p>En Java “puro” tendrías que crear un servidor, leer el socket, parsear el HTTP, convertir JSON a objetos, abrir la conexión a la BD, escribir SQL… Spring ya trae todo eso hecho, y tú solo escribes la lógica de tu tienda.</p>
+
+<h3>¿Y Spring Boot?</h3>
+<p>Spring “a secas” exigía mucha configuración (archivos XML, configurar el servidor Tomcat aparte, etc.). <strong>Spring Boot</strong> es una capa encima que lo hace fácil:</p>
+<ul>
+  <li><strong>Starters:</strong> en vez de elegir 15 librerías compatibles, agregas una sola, por ejemplo <code>spring-boot-starter-data-jpa</code>, y trae todo lo necesario.</li>
+  <li><strong>Auto-configuración:</strong> Boot mira qué librerías hay y se configura solo. ¿Hay H2 en el classpath? Entonces crea la conexión a H2. ¿Hay Spring Security? Entonces protege los endpoints.</li>
+  <li><strong>Servidor embebido:</strong> trae Tomcat adentro. No instalas un servidor; la API es un programa Java normal con <code>main</code> que escucha en el puerto 8081.</li>
+  <li><strong>application.properties:</strong> un solo archivo para cambiar puerto, BD, etc.</li>
+</ul>
+<div class="box idea"><b>Idea clave</b>Spring Boot = Spring + configuración automática + servidor incluido. Por eso tu proyecto tiene tan poco código “de infraestructura”: casi todo lo que escribiste es lógica del negocio.</div>
+</section>
+
+<section id="ioc">
+<h2>4. Beans e inyección de dependencias</h2>
+<p>Este es <strong>el concepto más importante de Spring</strong> y casi seguro te lo preguntan.</p>
+
+<h3>El problema en Java puro</h3>
+<pre><code><span class="c">// Sin Spring: cada clase crea lo que necesita</span>
+<span class="k">public class</span> <span class="t">OrderService</span> {
+    <span class="k">private</span> <span class="t">OrderRepository</span> orders = <span class="k">new</span> <span class="t">OrderRepository</span>(<span class="k">new</span> <span class="t">Connection</span>(<span class="s">"jdbc:..."</span>));
+    <span class="k">private</span> <span class="t">SneakerService</span> sneakers = <span class="k">new</span> <span class="t">SneakerService</span>(...); <span class="c">// ¿y sus dependencias?</span>
+}</code></pre>
+<p>Cada clase tiene que saber cómo construir a las demás. Todo queda acoplado, es difícil de probar y terminas con muchas instancias repetidas.</p>
+
+<h3>La solución de Spring</h3>
+<p>Spring tiene un <strong>contenedor</strong> (el <em>ApplicationContext</em>): una “caja” donde él mismo crea los objetos importantes de la app y los guarda. A cada objeto que vive en el contenedor se le llama <strong>bean</strong>. Por defecto hay <strong>una sola instancia</strong> de cada bean (singleton).</p>
+<p>Tú solo declaras qué necesitas en el constructor, y Spring te lo pasa. Eso es la <strong>Inyección de Dependencias (DI)</strong>:</p>
+<span class="file">api/.../service/OrderService.java</span>
+<pre><code><span class="a">@Service</span>                      <span class="c">// "Spring, crea un bean de esta clase"</span>
+<span class="k">public class</span> <span class="t">OrderService</span> {
+    <span class="k">private final</span> <span class="t">OrderRepository</span> orders;
+    <span class="k">private final</span> <span class="t">UserRepository</span> users;
+    <span class="k">private final</span> <span class="t">SneakerService</span> sneakerService;
+
+    <span class="c">// Spring ve este constructor, busca esos 3 beans y los pasa solo.</span>
+    <span class="k">public</span> <span class="t">OrderService</span>(<span class="t">OrderRepository</span> orders, <span class="t">UserRepository</span> users, <span class="t">SneakerService</span> sneakerService) {
+        <span class="k">this</span>.orders = orders;
+        <span class="k">this</span>.users = users;
+        <span class="k">this</span>.sneakerService = sneakerService;
+    }
+}</code></pre>
+<p>Nunca escribes <code>new OrderService(...)</code>. Spring arma el “árbol” completo: crea los repositorios, luego <code>SneakerService</code> (que necesita repositorios), luego <code>OrderService</code> (que necesita <code>SneakerService</code>), luego <code>OrderController</code> (que necesita <code>OrderService</code>).</p>
+
+<h3>¿Cómo sabe Spring qué clases son beans?</h3>
+<div class="tw"><table>
+<tr><th>Anotación</th><th>Significa</th><th>En el proyecto</th></tr>
+<tr><td><code>@Component</code></td><td>Bean genérico.</td><td><code>DataSeeder</code></td></tr>
+<tr><td><code>@Service</code></td><td>Bean de lógica de negocio (es un <code>@Component</code> con nombre más claro).</td><td><code>AuthService</code>, <code>SneakerService</code>, <code>OrderService</code>, <code>CatalogService</code>, <code>TokenService</code></td></tr>
+<tr><td><code>@RestController</code></td><td>Bean que atiende peticiones HTTP y responde JSON.</td><td>Los 4 controllers</td></tr>
+<tr><td><code>@Configuration</code> + <code>@Bean</code></td><td>Clase con métodos que <em>fabrican</em> beans. Se usa para objetos de librerías que no puedes anotar (por ejemplo <code>BCryptPasswordEncoder</code>).</td><td><code>SecurityConfig</code>, <code>JwtConfig</code></td></tr>
+<tr><td>(interfaz que extiende <code>JpaRepository</code>)</td><td>Spring Data crea la implementación y el bean automáticamente.</td><td>Los 6 repositorios</td></tr>
+</table></div>
+<p>Al arrancar, Spring hace un <strong>component scan</strong>: recorre el paquete <code>com.sneakhub.api</code> y todos sus subpaquetes buscando esas anotaciones.</p>
+
+<div class="box info"><b>¿Y @Autowired?</b>En tutoriales viejos verás <code>@Autowired</code> encima de un atributo. Hace lo mismo, pero la forma recomendada hoy es la del proyecto: <strong>inyección por constructor</strong>, sin anotación (si la clase tiene un solo constructor, Spring lo usa). Así los campos pueden ser <code>final</code> y es fácil hacer pruebas pasando objetos falsos.</div>
+
+<div class="box exam">“¿Qué es un bean?”: un objeto creado y administrado por el contenedor de Spring. “¿Qué es la inyección de dependencias?”: en vez de que una clase cree sus dependencias con <code>new</code>, el contenedor se las entrega (aquí por el constructor). Reduce el acoplamiento y facilita las pruebas.</div>
+</section>
+
+<section id="mvc">
+<h2>5. ¿Es MVC? Las capas del proyecto</h2>
+<p>Sí, más o menos, pero con un matiz importante. El módulo que usa la API se llama literalmente <strong>Spring MVC</strong> (<code>spring-boot-starter-webmvc</code>). Vamos por partes.</p>
+
+<h3>MVC clásico</h3>
+<div class="flow">
+  <div class="node"><h5>Model</h5><small>Los datos y las reglas.</small></div>
+  <div class="node"><h5>View</h5><small>Lo que se muestra (HTML).</small></div>
+  <div class="node"><h5>Controller</h5><small>Recibe la acción del usuario, usa el modelo y elige la vista.</small></div>
+</div>
+<p>En una app web MVC “tradicional” (con Thymeleaf o JSP), el servidor genera el HTML. Aquí <strong>no</strong>: tu API no genera pantallas, devuelve <strong>JSON</strong>. La “vista” real es la app Flutter.</p>
+
+<h3>Cómo se mapea en SneakHub</h3>
+<div class="tw"><table>
+<tr><th>MVC</th><th>En la API</th><th>Paquete</th></tr>
+<tr><td><strong>Controller</strong></td><td>Recibe HTTP, valida la entrada y delega. No tiene reglas de negocio.</td><td><code>controller/</code></td></tr>
+<tr><td><strong>Model</strong></td><td>Se divide en tres capas: <em>service</em> (reglas), <em>repository</em> (acceso a datos) y <em>entity</em> (las tablas como clases).</td><td><code>service/</code>, <code>repository/</code>, <code>entity/</code></td></tr>
+<tr><td><strong>View</strong></td><td>El JSON que se responde (los DTOs) y, del otro lado, las pantallas de Flutter.</td><td><code>dto/</code> + app Flutter</td></tr>
+</table></div>
+
+<h3>La arquitectura en capas (lo que de verdad se usa)</h3>
+<p>Más preciso que “MVC” es decir que la API usa una <strong>arquitectura en capas</strong>. Cada capa solo habla con la de abajo:</p>
+<div class="flow">
+  <div class="node hot"><h5>Controller</h5><small>“¿Qué me pidieron?” HTTP ⇄ objetos Java</small></div>
+  <div class="arrow">→</div>
+  <div class="node dark"><h5>Service</h5><small>“¿Está permitido? ¿Hay stock?” Reglas de negocio y transacciones</small></div>
+  <div class="arrow">→</div>
+  <div class="node"><h5>Repository</h5><small>“Tráeme / guarda esto.” Consultas a la BD</small></div>
+  <div class="arrow">→</div>
+  <div class="node"><h5>Base de datos</h5><small>Tablas en H2</small></div>
+</div>
+<p>Y transversalmente:</p>
+<ul>
+  <li><strong>entity/</strong>: las clases que representan tablas. Las usan el repository y el service.</li>
+  <li><strong>dto/</strong>: los objetos que entran y salen por HTTP. Los usan el controller y el service.</li>
+  <li><strong>exception/</strong>: errores de negocio y su traducción a JSON.</li>
+  <li><strong>config/</strong>: seguridad, JWT y datos iniciales.</li>
+</ul>
+
+<div class="box idea"><b>¿Por qué separar así?</b>Si mañana cambias H2 por MySQL, solo cambia la configuración, no los services. Si mañana haces una app de escritorio, los services y repositories quedan iguales. Cada clase tiene <strong>una sola responsabilidad</strong>, así que es fácil saber dónde buscar un bug: “el stock se descuenta mal” está en el service; “la URL no existe” está en el controller.</div>
+
+<div class="box exam">Respuesta corta: “Usa Spring MVC con arquitectura en capas. El controller es la C de MVC; el Model está repartido en services, repositories y entidades; y como es una API REST, la vista es JSON y la interfaz real la pinta Flutter.”</div>
+</section>
+
+<section id="arranque">
+<h2>6. Qué pasa al arrancar la API</h2>
+<span class="file">api/.../SneakHubApiApplication.java</span>
+<pre><code><span class="a">@SpringBootApplication</span>
+<span class="k">public class</span> <span class="t">SneakHubApiApplication</span> {
+    <span class="k">public static void</span> main(<span class="t">String</span>[] args) {
+        <span class="t">SpringApplication</span>.run(<span class="t">SneakHubApiApplication</span>.<span class="k">class</span>, args);
+    }
+}</code></pre>
+<p><code>@SpringBootApplication</code> es la suma de tres anotaciones:</p>
+<ul>
+  <li><code>@Configuration</code>: esta clase puede definir beans.</li>
+  <li><code>@EnableAutoConfiguration</code>: activa la auto-configuración de Boot.</li>
+  <li><code>@ComponentScan</code>: busca beans en este paquete y sus subpaquetes. Por eso todas las clases están bajo <code>com.sneakhub.api</code>.</li>
+</ul>
+
+<h3>Lo que ocurre cuando ejecutas <code>.\mvnw spring-boot:run</code></h3>
+<ol class="steps">
+  <li>Maven compila el código y arranca el <code>main</code>.</li>
+  <li>Spring lee <code>application.properties</code>.</li>
+  <li>Hace el <em>component scan</em> y registra todas las clases anotadas.</li>
+  <li>La auto-configuración crea la conexión a H2 (el <em>DataSource</em>). Si el archivo de la BD no existe, H2 lo crea.</li>
+  <li>Hibernate lee las clases <code>@Entity</code> y, como <code>ddl-auto=update</code>, crea o actualiza las tablas.</li>
+  <li>Spring Data crea las implementaciones de los repositorios.</li>
+  <li>Se crean los services, controllers, la configuración de seguridad, etc., inyectando dependencias.</li>
+  <li>Arranca Tomcat en el puerto 8081.</li>
+  <li>Se ejecuta <code>DataSeeder.run()</code>: si no hay usuarios, inserta los datos de ejemplo.</li>
+  <li>En consola sale <code>Started SneakHubApiApplication</code>. La API ya recibe peticiones.</li>
+</ol>
+</section>
+
+<section id="pom">
+<h2>7. pom.xml y Maven</h2>
+<p><strong>Maven</strong> es el gestor de proyectos de Java: descarga las librerías (dependencias), compila y ejecuta. Su archivo es <code>pom.xml</code>. <code>mvnw</code> es el <em>Maven Wrapper</em>: un script que descarga Maven solo, así no necesitas instalarlo.</p>
+<p>El <code>&lt;parent&gt;</code> es <code>spring-boot-starter-parent 4.1.2</code>: fija versiones compatibles de todas las librerías, por eso las dependencias no llevan número de versión.</p>
+<div class="tw"><table>
+<tr><th>Dependencia</th><th>Qué aporta</th></tr>
+<tr><td><code>spring-boot-starter-webmvc</code></td><td>Spring MVC + Tomcat embebido + Jackson (convierte JSON ⇄ objetos). Permite <code>@RestController</code>, <code>@GetMapping</code>, etc.</td></tr>
+<tr><td><code>spring-boot-starter-data-jpa</code></td><td>JPA + Hibernate + Spring Data (repositorios). El puente objetos ⇄ tablas.</td></tr>
+<tr><td><code>h2</code></td><td>El motor de base de datos H2, como librería Java (no se instala aparte).</td></tr>
+<tr><td><code>spring-boot-h2console</code></td><td>La consola web <code>/h2-console</code> para ver las tablas en el navegador.</td></tr>
+<tr><td><code>spring-boot-starter-security</code></td><td>Spring Security: filtros de autenticación y autorización.</td></tr>
+<tr><td><code>spring-boot-starter-security-oauth2-resource-server</code></td><td>Validar tokens JWT que llegan en <code>Authorization: Bearer</code>. Incluye Nimbus, la librería que firma y lee los JWT.</td></tr>
+<tr><td><code>spring-boot-starter-validation</code></td><td>Bean Validation: <code>@NotBlank</code>, <code>@Email</code>, <code>@Min</code>, <code>@Valid</code>…</td></tr>
+<tr><td><code>*-test</code></td><td>Librerías para pruebas (JUnit, MockMvc…). Solo se usan al ejecutar tests.</td></tr>
+</table></div>
+</section>
+
+<section id="props">
+<h2>8. application.properties</h2>
+<span class="file">api/src/main/resources/application.properties</span>
+<pre><code><span class="a">server.port</span>=${PORT:8081}                       <span class="c"># puerto; usa la variable PORT si existe, si no 8081</span>
+<span class="a">spring.datasource.url</span>=jdbc:h2:file:./data/sneakhub  <span class="c"># BD H2 en archivo</span>
+<span class="a">spring.datasource.username</span>=sa                    <span class="c"># usuario por defecto de H2</span>
+<span class="a">spring.datasource.password</span>=
+<span class="a">spring.jpa.hibernate.ddl-auto</span>=update           <span class="c"># Hibernate crea/actualiza las tablas</span>
+<span class="a">spring.jpa.open-in-view</span>=false                  <span class="c"># la sesión de BD termina en el service</span>
+<span class="a">spring.h2.console.enabled</span>=true                 <span class="c"># consola web de la BD</span>
+<span class="a">spring.h2.console.path</span>=/h2-console
+<span class="a">app.jwt.secret</span>=sneakhub-clave-secreta-...       <span class="c"># clave para firmar los JWT</span>
+<span class="a">app.jwt.access-expiration-minutes</span>=60
+<span class="a">app.jwt.refresh-expiration-days</span>=7</code></pre>
+<p>Las propiedades <code>spring.*</code> y <code>server.*</code> las entiende Spring Boot solo. Las <code>app.*</code> las inventamos nosotros y se leen con <code>@Value("${app.jwt.secret}")</code>, como se ve en <code>JwtConfig</code> y <code>TokenService</code>.</p>
+<div class="box info"><b>open-in-view=false</b>Con <code>true</code> (el valor por defecto), la conexión a la BD sigue abierta mientras se genera el JSON, y una relación “perezosa” podría disparar consultas ocultas en el controller. Con <code>false</code>, todo se carga dentro del service (en la transacción), y por eso los services ya devuelven DTOs y no entidades.</div>
+</section>
+
+<section id="bd">
+<h2>9. La base de datos: ¿existe? ¿quién la creó?</h2>
+<p class="lead">Sí, el proyecto usa una base de datos real, relacional y con SQL: <strong>H2</strong>. No la creaste tú porque entre H2, Spring Boot y Hibernate la crearon solos. Así funciona:</p>
+
+<h3>Paso 1: H2 es una base de datos “embebida”</h3>
+<p>MySQL o PostgreSQL son programas aparte: los instalas, los arrancas y creas la BD con <code>CREATE DATABASE</code>. <strong>H2 es distinto: es una librería Java</strong> (está en el <code>pom.xml</code>) que corre <em>dentro</em> del mismo proceso de la API. No hay nada que instalar.</p>
+
+<h3>Paso 2: la URL dice “usa este archivo”</h3>
+<pre><code>jdbc:h2:file:./data/sneakhub</code></pre>
+<p>Significa: “base H2 en modo archivo, en <code>./data/sneakhub</code>”. La ruta es relativa a la carpeta desde donde ejecutas la API (<code>api/</code>). <strong>Si el archivo no existe, H2 lo crea vacío</strong>. Por eso apareció <code>api/data/sneakhub.mv.db</code> la primera vez que arrancaste. (<code>sneakhub.trace.db</code> es solo un registro de errores de H2.)</p>
+<p>Spring Boot lee esa URL y, por auto-configuración, crea el <strong>DataSource</strong> (el objeto que da conexiones a la BD) sin que escribas código.</p>
+
+<h3>Paso 3: Hibernate crea las tablas a partir de tus clases</h3>
+<p>Con <code>spring.jpa.hibernate.ddl-auto=update</code>, Hibernate mira cada clase <code>@Entity</code> al arrancar y genera el SQL de las tablas que falten. Por ejemplo, de <code>Brand</code> sale algo así:</p>
+<pre><code><span class="k">create table</span> brands (
+    id   <span class="t">bigint</span> generated by default <span class="k">as identity</span>,
+    logo <span class="t">varchar</span>(255),
+    name <span class="t">varchar</span>(255) <span class="k">not null unique</span>,
+    <span class="k">primary key</span> (id)
+);</code></pre>
+<div class="tw"><table>
+<tr><th>Valor de ddl-auto</th><th>Qué hace al arrancar</th></tr>
+<tr><td><code>none</code></td><td>Nada: tú creas las tablas.</td></tr>
+<tr><td><code>validate</code></td><td>Revisa que las tablas coincidan con las entidades; si no, falla.</td></tr>
+<tr><td><code><strong>update</strong></code></td><td>Crea las tablas o columnas que falten. No borra datos. <strong>(el del proyecto)</strong></td></tr>
+<tr><td><code>create</code></td><td>Borra todo y crea de cero en cada arranque.</td></tr>
+<tr><td><code>create-drop</code></td><td>Como <code>create</code>, y además borra al apagar (útil en pruebas).</td></tr>
+</table></div>
+
+<h3>Paso 4: el DataSeeder llena los datos</h3>
+<p>Con las tablas vacías, <code>DataSeeder</code> inserta 2 usuarios, 6 marcas, 5 categorías y 16 tenis (ver sección 17). Solo lo hace si <code>users.count() == 0</code>, así que no duplica datos en cada arranque.</p>
+
+<h3>Las tablas que existen</h3>
+<div class="er">
+  <div class="tbl"><h5>users</h5><ul><li class="pk">id PK</li><li>name</li><li>email UNIQUE</li><li>password (BCrypt)</li><li>role (ADMIN/CUSTOMER)</li><li>avatar</li></ul></div>
+  <div class="tbl"><h5>brands</h5><ul><li class="pk">id PK</li><li>name UNIQUE</li><li>logo</li></ul></div>
+  <div class="tbl"><h5>categories</h5><ul><li class="pk">id PK</li><li>name UNIQUE</li></ul></div>
+  <div class="tbl"><h5>sneakers</h5><ul><li class="pk">id PK</li><li>name, description</li><li>price, stock</li><li>gender, colors</li><li class="fk">brand_id → brands</li><li class="fk">category_id → categories</li></ul></div>
+  <div class="tbl"><h5>sneaker_sizes</h5><ul><li class="fk">sneaker_id → sneakers</li><li>size</li></ul></div>
+  <div class="tbl"><h5>sneaker_images</h5><ul><li class="fk">sneaker_id → sneakers</li><li>url</li></ul></div>
+  <div class="tbl"><h5>orders</h5><ul><li class="pk">id PK</li><li class="fk">user_id → users</li><li>total, status</li><li>created_at</li></ul></div>
+  <div class="tbl"><h5>order_items</h5><ul><li class="pk">id PK</li><li class="fk">order_id → orders</li><li class="fk">sneaker_id → sneakers</li><li>size, quantity</li><li>unit_price</li></ul></div>
+</div>
+<p>Relaciones: una marca tiene muchos tenis; una categoría tiene muchos tenis; un usuario tiene muchos pedidos; un pedido tiene muchos ítems; cada ítem apunta a un tenis.</p>
+
+<h3>Ver la base de datos con tus ojos</h3>
+<ol>
+  <li>Con la API corriendo, abre <a href="http://localhost:8081/h2-console">http://localhost:8081/h2-console</a>.</li>
+  <li>JDBC URL: <code>jdbc:h2:file:./data/sneakhub</code> · Usuario: <code>sa</code> · Contraseña: vacía.</li>
+  <li>Prueba <code>SELECT * FROM SNEAKERS;</code> o <code>SELECT * FROM ORDERS;</code>.</li>
+</ol>
+
+<h3>Reiniciar la base</h3>
+<p>Apaga la API, borra la carpeta <code>api/data</code> y vuelve a arrancar. Se crea vacía y el seeder la llena de nuevo.</p>
+
+<div class="box warn"><b>“The file is locked”</b>H2 en modo archivo solo permite <strong>un proceso a la vez</strong>. Si tienes dos APIs corriendo (por ejemplo una en VS Code y otra en la terminal), la segunda no arranca. Cierra la otra.</div>
+
+<h3>¿Y si el profesor pide MySQL?</h3>
+<p>El código Java no cambia: ni entidades, ni repositorios, ni services. Solo cambias:</p>
+<pre><code><span class="c">&lt;!-- pom.xml: en lugar de h2 --&gt;</span>
+&lt;dependency&gt;&lt;groupId&gt;com.mysql&lt;/groupId&gt;&lt;artifactId&gt;mysql-connector-j&lt;/artifactId&gt;&lt;/dependency&gt;
+
+<span class="c"># application.properties</span>
+<span class="a">spring.datasource.url</span>=jdbc:mysql://localhost:3306/sneakhub
+<span class="a">spring.datasource.username</span>=root
+<span class="a">spring.datasource.password</span>=tu_clave</code></pre>
+<p>La diferencia es que en MySQL <strong>sí</strong> tendrías que instalar el servidor y crear la base vacía (<code>CREATE DATABASE sneakhub;</code>). Las tablas igual las crearía Hibernate. Eso demuestra para qué sirve JPA: aísla el código del motor de base de datos.</p>
+
+<div class="box exam">“¿El proyecto usa BD?”: sí, H2, una BD relacional embebida guardada en <code>api/data/sneakhub.mv.db</code>. “¿Cómo se creó?”: H2 crea el archivo al conectarse; Spring Boot configura la conexión desde <code>application.properties</code>; Hibernate genera las tablas desde las entidades (<code>ddl-auto=update</code>); y el <code>DataSeeder</code> inserta los datos iniciales.</div>
+</section>
+
+<section id="entidades">
+<h2>10. Entidades (JPA / Hibernate)</h2>
+<p><strong>ORM</strong> (Object-Relational Mapping) significa trabajar con objetos Java y que una librería los traduzca a filas de tablas. <strong>JPA</strong> es la <em>especificación</em> (las reglas y anotaciones, en el paquete <code>jakarta.persistence</code>) y <strong>Hibernate</strong> es la <em>implementación</em> que hace el trabajo de verdad.</p>
+<span class="file">api/.../entity/Sneaker.java (resumido)</span>
+<pre><code><span class="a">@Entity</span>                               <span class="c">// esta clase es una tabla</span>
+<span class="a">@Table</span>(name = <span class="s">"sneakers"</span>)              <span class="c">// con este nombre</span>
+<span class="k">public class</span> <span class="t">Sneaker</span> {
+    <span class="a">@Id</span>                                <span class="c">// llave primaria</span>
+    <span class="a">@GeneratedValue</span>(strategy = <span class="t">GenerationType</span>.IDENTITY) <span class="c">// autoincremental</span>
+    <span class="k">private</span> <span class="t">Long</span> id;
+
+    <span class="a">@Column</span>(nullable = <span class="k">false</span>)          <span class="c">// NOT NULL</span>
+    <span class="k">private</span> <span class="t">String</span> name;
+
+    <span class="a">@Enumerated</span>(<span class="t">EnumType</span>.STRING)       <span class="c">// guarda "UNISEX" y no 2</span>
+    <span class="k">private</span> <span class="t">Gender</span> gender;
+
+    <span class="a">@ElementCollection</span>                 <span class="c">// lista de valores simples → tabla aparte</span>
+    <span class="a">@CollectionTable</span>(name = <span class="s">"sneaker_sizes"</span>, joinColumns = <span class="a">@JoinColumn</span>(name = <span class="s">"sneaker_id"</span>))
+    <span class="k">private</span> <span class="t">List</span>&lt;<span class="t">Integer</span>&gt; sizes;
+
+    <span class="a">@ManyToOne</span>(optional = <span class="k">false</span>)       <span class="c">// muchos tenis → una marca</span>
+    <span class="a">@JoinColumn</span>(name = <span class="s">"brand_id"</span>)      <span class="c">// columna de llave foránea</span>
+    <span class="k">private</span> <span class="t">Brand</span> brand;
+}</code></pre>
+
+<h3>Relaciones del proyecto</h3>
+<div class="tw"><table>
+<tr><th>Anotación</th><th>Dónde</th><th>Significado</th></tr>
+<tr><td><code>@ManyToOne</code></td><td><code>Sneaker.brand</code>, <code>Sneaker.category</code>, <code>Order.user</code>, <code>OrderItem.order</code>, <code>OrderItem.sneaker</code></td><td>Muchos de esta clase apuntan a uno de la otra. Crea la columna <code>xxx_id</code>.</td></tr>
+<tr><td><code>@OneToMany(mappedBy="order", cascade=ALL, orphanRemoval=true)</code></td><td><code>Order.items</code></td><td>Un pedido tiene muchos ítems. <code>mappedBy</code>: la FK está en <code>OrderItem.order</code>. <code>cascade=ALL</code>: al guardar el pedido se guardan sus ítems. <code>orphanRemoval</code>: si quitas un ítem de la lista, se borra.</td></tr>
+<tr><td><code>@ElementCollection</code></td><td><code>Sneaker.sizes</code>, <code>Sneaker.images</code></td><td>Listas de números o textos que no son entidades propias.</td></tr>
+</table></div>
+
+<h3>Detalles que demuestran que entiendes</h3>
+<ul>
+  <li><strong>Constructor <code>protected</code> vacío</strong> (en <code>User</code>, <code>Brand</code>, <code>Order</code>…): JPA lo necesita para crear el objeto al leer de la BD; es <code>protected</code> para que tu código no lo use por error.</li>
+  <li><strong><code>OrderItem.unitPrice</code></strong> guarda el precio <em>al momento de comprar</em>. Si el admin sube el precio mañana, los pedidos viejos no cambian.</li>
+  <li><strong><code>Order.addItem()</code></strong> mantiene las dos direcciones de la relación (<code>item.setOrder(this)</code>) y suma el total. Así nadie se olvida de calcularlo.</li>
+  <li><strong>Enums</strong> (<code>Role</code>, <code>Gender</code>, <code>OrderStatus</code>) se guardan como texto con <code>EnumType.STRING</code>. Si se guardaran como número y alguien reordenara el enum, los datos quedarían mal.</li>
+  <li><strong>La contraseña</strong> se guarda cifrada con BCrypt, nunca en texto plano.</li>
+</ul>
+</section>
+
+<section id="repos">
+<h2>11. Repositorios (Spring Data JPA)</h2>
+<p>Un repositorio es la clase que habla con la BD. En Spring Data <strong>solo escribes una interfaz</strong> y Spring genera la implementación al arrancar.</p>
+<span class="file">api/.../repository/OrderRepository.java</span>
+<pre><code><span class="k">public interface</span> <span class="t">OrderRepository</span> <span class="k">extends</span> <span class="t">JpaRepository</span>&lt;<span class="t">Order</span>, <span class="t">Long</span>&gt; {
+    <span class="t">List</span>&lt;<span class="t">Order</span>&gt; findByUserEmailOrderByCreatedAtDesc(<span class="t">String</span> email);
+    <span class="t">List</span>&lt;<span class="t">Order</span>&gt; findAllByOrderByCreatedAtDesc();
+}</code></pre>
+<p><code>JpaRepository&lt;Order, Long&gt;</code> = “repositorio de <code>Order</code> cuya llave es <code>Long</code>”. Gratis trae <code>save</code>, <code>findById</code>, <code>findAll</code>, <code>delete</code>, <code>count</code>, <code>existsById</code>…</p>
+
+<h3>Consultas por nombre de método</h3>
+<p>Spring lee el <strong>nombre</strong> del método y arma la consulta:</p>
+<div class="tw"><table>
+<tr><th>Trozo del nombre</th><th>Se traduce en</th></tr>
+<tr><td><code>findBy</code></td><td><code>SELECT … WHERE</code></td></tr>
+<tr><td><code>UserEmail</code></td><td><code>order.user.email = ?</code> (navega la relación y hace JOIN)</td></tr>
+<tr><td><code>OrderByCreatedAtDesc</code></td><td><code>ORDER BY created_at DESC</code></td></tr>
+<tr><td><code>existsByNameIgnoreCase</code></td><td>¿Existe alguno con ese nombre, sin importar mayúsculas? → <code>boolean</code></td></tr>
+<tr><td><code>existsBySneakerId</code></td><td>¿Hay algún ítem de pedido con ese tenis?</td></tr>
+</table></div>
+
+<h3>Consulta escrita a mano (JPQL)</h3>
+<p>Para los filtros del catálogo se usa <code>@Query</code> con <strong>JPQL</strong>, que se parece a SQL pero usa nombres de <em>clases y atributos</em>, no de tablas:</p>
+<span class="file">api/.../repository/SneakerRepository.java</span>
+<pre><code><span class="a">@Query</span>(<span class="s">"""
+    select s from Sneaker s
+    where (:brandId is null or s.brand.id = :brandId)
+      and (:categoryId is null or s.category.id = :categoryId)
+      and (:gender is null or s.gender = :gender)
+      and (:q is null or lower(s.name) like lower(concat('%', :q, '%')))
+    order by s.id
+    """</span>)
+<span class="t">List</span>&lt;<span class="t">Sneaker</span>&gt; search(<span class="a">@Param</span>(<span class="s">"brandId"</span>) <span class="t">Long</span> brandId, ...);</code></pre>
+<p>El truco <code>(:x is null or …)</code> hace que cada filtro sea opcional: si Flutter no manda la marca, llega <code>null</code> y esa condición siempre es verdadera.</p>
+</section>
+
+<section id="dtos">
+<h2>12. DTOs y validación</h2>
+<p>Un <strong>DTO</strong> (Data Transfer Object) es un objeto que solo sirve para <em>transportar</em> datos por HTTP. En el proyecto son <code>record</code> de Java (clases inmutables con constructor, getters, <code>equals</code> y <code>toString</code> automáticos).</p>
+
+<h3>¿Por qué no devolver la entidad directamente?</h3>
+<ul>
+  <li><strong>Seguridad:</strong> <code>User</code> tiene la contraseña. <code>UserResponse</code> no la tiene.</li>
+  <li><strong>Ciclos:</strong> <code>Order</code> → <code>items</code> → <code>order</code> → <code>items</code>… al pasarlo a JSON sería infinito.</li>
+  <li><strong>Contrato estable:</strong> puedes cambiar la tabla sin romper la app.</li>
+  <li><strong>Forma cómoda:</strong> <code>OrderItemResponse</code> trae <code>sneakerName</code>, <code>image</code> y <code>subtotal</code> ya calculados para la app.</li>
+</ul>
+
+<h3>Request (lo que entra) vs Response (lo que sale)</h3>
+<span class="file">api/.../dto/SneakerDtos.java (resumido)</span>
+<pre><code><span class="k">public record</span> <span class="t">SneakerRequest</span>(
+    <span class="a">@NotBlank</span>(message = <span class="s">"El nombre es obligatorio"</span>) <span class="t">String</span> name,
+    <span class="a">@NotNull</span> <span class="a">@Positive</span>(message = <span class="s">"El precio debe ser mayor a 0"</span>) <span class="t">Double</span> price,
+    <span class="a">@NotNull</span> <span class="a">@PositiveOrZero</span> <span class="t">Integer</span> stock,
+    <span class="a">@NotEmpty</span>(message = <span class="s">"Debe tener al menos una talla"</span>) <span class="t">List</span>&lt;<span class="t">Integer</span>&gt; sizes,
+    <span class="a">@NotNull</span> <span class="t">Long</span> brandId,       <span class="c">// llega el id, no el objeto marca</span>
+    ...) {}
+
+<span class="k">public record</span> <span class="t">SneakerResponse</span>(<span class="t">Long</span> id, <span class="t">String</span> name, ..., <span class="t">BrandResponse</span> brand, <span class="t">CategoryResponse</span> category) {
+    <span class="k">public static</span> <span class="t">SneakerResponse</span> from(<span class="t">Sneaker</span> s) { ... }  <span class="c">// entidad → DTO</span>
+}</code></pre>
+<p>Cuando el controller tiene <code>@Valid @RequestBody SneakerRequest request</code>, Spring:</p>
+<ol>
+  <li>Convierte el JSON en el record (lo hace <strong>Jackson</strong>).</li>
+  <li>Revisa todas las anotaciones de validación.</li>
+  <li>Si algo falla, <strong>no ejecuta el método</strong>: lanza <code>MethodArgumentNotValidException</code>, y el <code>GlobalExceptionHandler</code> responde 400 con los mensajes por campo.</li>
+</ol>
+<p><code>@JsonProperty("access_token")</code> en <code>AuthResponse</code> cambia el nombre en el JSON: en Java es <code>accessToken</code> y en JSON <code>access_token</code>.</p>
+</section>
+
+<section id="servicios">
+<h2>13. Servicios y transacciones</h2>
+<p>Los services tienen las <strong>reglas de negocio</strong>, es decir, todo lo que hace que esto sea “una tienda” y no solo tablas:</p>
+<div class="tw"><table>
+<tr><th>Service</th><th>Reglas</th></tr>
+<tr><td><code>AuthService</code></td><td>Login (correo existe + contraseña coincide con BCrypt), registro (correo único, rol siempre CUSTOMER), refresh, perfil.</td></tr>
+<tr><td><code>TokenService</code></td><td>Genera el access token (60 min) y el refresh token (7 días); valida el refresh.</td></tr>
+<tr><td><code>CatalogService</code></td><td>Listar y crear marcas y categorías; no permite nombres repetidos (409).</td></tr>
+<tr><td><code>SneakerService</code></td><td>CRUD de tenis. Ordena y quita tallas repetidas. No deja borrar un tenis que ya tiene pedidos (409).</td></tr>
+<tr><td><code>OrderService</code></td><td>Crear pedido (valida talla y stock, descuenta stock), listar (admin: todos; cliente: los suyos), ver uno (403 si es de otro), cambiar estado (cancelar devuelve stock).</td></tr>
+</table></div>
+
+<h3>@Transactional</h3>
+<p>Una <strong>transacción</strong> es un grupo de operaciones que se hacen <em>todas o ninguna</em>. Mira <code>OrderService.create</code>:</p>
+<pre><code><span class="a">@Transactional</span>
+<span class="k">public</span> <span class="t">OrderResponse</span> create(<span class="t">String</span> email, <span class="t">OrderRequest</span> request) {
+    <span class="t">User</span> user = users.findByEmail(email).orElseThrow(...);
+    <span class="t">Order</span> order = <span class="k">new</span> <span class="t">Order</span>(user);
+
+    <span class="c">// 1. Suma cantidades por tenis (2 tallas del mismo tenis cuentan juntas)</span>
+    <span class="t">Map</span>&lt;<span class="t">Long</span>, <span class="t">Integer</span>&gt; requested = <span class="k">new</span> <span class="t">HashMap</span>&lt;&gt;();
+    <span class="k">for</span> (<span class="t">OrderItemRequest</span> item : request.items())
+        requested.merge(item.sneakerId(), item.quantity(), <span class="t">Integer</span>::sum);
+
+    <span class="c">// 2. Valida talla y stock de cada ítem</span>
+    <span class="k">for</span> (<span class="t">OrderItemRequest</span> item : request.items()) {
+        <span class="t">Sneaker</span> sneaker = sneakerService.get(item.sneakerId());
+        <span class="k">if</span> (!sneaker.getSizes().contains(item.size())) <span class="k">throw</span> <span class="t">ApiException</span>.badRequest(...);
+        <span class="k">if</span> (requested.get(sneaker.getId()) &gt; sneaker.getStock()) <span class="k">throw</span> <span class="t">ApiException</span>.badRequest(...);
+        order.addItem(<span class="k">new</span> <span class="t">OrderItem</span>(sneaker, item.size(), item.quantity()));
+    }
+    <span class="c">// 3. Descuenta stock (¡sin llamar a save del tenis!)</span>
+    order.getItems().forEach(i -&gt; i.getSneaker().setStock(i.getSneaker().getStock() - i.getQuantity()));
+    <span class="k">return</span> <span class="t">OrderResponse</span>.from(orders.save(order));
+}</code></pre>
+<p>Si el tercer ítem no tiene stock, se lanza una excepción, la transacción hace <strong>rollback</strong> y nada de lo anterior queda guardado. Sin <code>@Transactional</code> podría quedar un pedido a medias.</p>
+
+<h3>Dirty checking: ¿por qué no hay <code>save()</code> al descontar el stock?</h3>
+<p>Dentro de una transacción, las entidades que leíste están <strong>administradas</strong> por Hibernate. Cuando cambias un atributo (<code>setStock</code>), Hibernate lo nota y, al terminar la transacción, hace el <code>UPDATE</code> solo. Por eso <code>SneakerService.update()</code> y <code>OrderService.updateStatus()</code> tampoco llaman a <code>save</code>.</p>
+<p><code>@Transactional(readOnly = true)</code> se usa en las consultas: avisa que no habrá cambios y Hibernate se ahorra trabajo.</p>
+
+<div class="box warn"><b>Pregunta trampa: dos clientes compran el último par al mismo tiempo</b>Las dos transacciones podrían leer stock = 1 a la vez. El proyecto no lo bloquea explícitamente. La solución estándar es agregar <code>@Version</code> a <code>Sneaker</code> (bloqueo optimista): la segunda transacción falla en vez de dejar el stock negativo. Mencionarlo muestra que entiendes las transacciones.</div>
+</section>
+
+<section id="controllers">
+<h2>14. Controllers y endpoints</h2>
+<span class="file">api/.../controller/SneakerController.java (resumido)</span>
+<pre><code><span class="a">@RestController</span>                       <span class="c">// @Controller + @ResponseBody: lo que retorna va como JSON</span>
+<span class="a">@RequestMapping</span>(<span class="s">"/api/v1/sneakers"</span>)    <span class="c">// prefijo de todas las rutas</span>
+<span class="k">public class</span> <span class="t">SneakerController</span> {
+    <span class="a">@GetMapping</span>                         <span class="c">// GET /api/v1/sneakers?brandId=1&amp;q=air</span>
+    <span class="k">public</span> <span class="t">List</span>&lt;<span class="t">SneakerResponse</span>&gt; findAll(<span class="a">@RequestParam</span>(required = <span class="k">false</span>) <span class="t">Long</span> brandId, ...) { ... }
+
+    <span class="a">@GetMapping</span>(<span class="s">"/{id}"</span>)                <span class="c">// GET /api/v1/sneakers/5</span>
+    <span class="k">public</span> <span class="t">SneakerResponse</span> findById(<span class="a">@PathVariable</span> <span class="t">Long</span> id) { ... }
+
+    <span class="a">@PostMapping</span>
+    <span class="a">@ResponseStatus</span>(<span class="t">HttpStatus</span>.CREATED)  <span class="c">// responde 201 en vez de 200</span>
+    <span class="k">public</span> <span class="t">SneakerResponse</span> create(<span class="a">@Valid</span> <span class="a">@RequestBody</span> <span class="t">SneakerRequest</span> request) { ... }
+
+    <span class="a">@DeleteMapping</span>(<span class="s">"/{id}"</span>)
+    <span class="a">@ResponseStatus</span>(<span class="t">HttpStatus</span>.NO_CONTENT) <span class="c">// 204: éxito sin cuerpo</span>
+    <span class="k">public void</span> delete(<span class="a">@PathVariable</span> <span class="t">Long</span> id) { ... }
+}</code></pre>
+
+<div class="tw"><table>
+<tr><th>Anotación</th><th>De dónde saca el dato</th></tr>
+<tr><td><code>@PathVariable</code></td><td>De la ruta: <code>/sneakers/<strong>5</strong></code></td></tr>
+<tr><td><code>@RequestParam</code></td><td>Del query string: <code>?brandId=<strong>1</strong></code></td></tr>
+<tr><td><code>@RequestBody</code></td><td>Del cuerpo JSON de la petición</td></tr>
+<tr><td><code>Authentication auth</code></td><td>Del token: Spring lo inyecta; <code>auth.getName()</code> es el correo (el <em>subject</em> del JWT)</td></tr>
+</table></div>
+
+<p>Detrás de todo está el <strong>DispatcherServlet</strong> de Spring MVC: recibe todas las peticiones y busca qué método del controller coincide con el método HTTP y la ruta.</p>
+
+<h3>Todos los endpoints</h3>
+<div class="tw"><table>
+<tr><th>Método</th><th>Ruta (/api/v1…)</th><th>Quién</th><th>Qué hace</th><th>Código</th></tr>
+<tr><td><span class="pill m-post">POST</span></td><td><code>/auth/login</code></td><td>Público</td><td>Email + contraseña → tokens</td><td>200 / 401</td></tr>
+<tr><td><span class="pill m-post">POST</span></td><td><code>/auth/register</code></td><td>Público</td><td>Crea cliente → tokens</td><td>201 / 409</td></tr>
+<tr><td><span class="pill m-post">POST</span></td><td><code>/auth/refresh</code></td><td>Público</td><td>refresh_token → tokens nuevos</td><td>200 / 401</td></tr>
+<tr><td><span class="pill m-get">GET</span></td><td><code>/auth/profile</code></td><td>Con token</td><td>Datos del usuario logueado</td><td>200</td></tr>
+<tr><td><span class="pill m-get">GET</span></td><td><code>/sneakers</code></td><td>Público</td><td>Lista con filtros <code>brandId, categoryId, gender, q</code></td><td>200</td></tr>
+<tr><td><span class="pill m-get">GET</span></td><td><code>/sneakers/{id}</code></td><td>Público</td><td>Un tenis</td><td>200 / 404</td></tr>
+<tr><td><span class="pill m-post">POST</span></td><td><code>/sneakers</code></td><td>ADMIN</td><td>Crear tenis</td><td>201 / 400</td></tr>
+<tr><td><span class="pill m-put">PUT</span></td><td><code>/sneakers/{id}</code></td><td>ADMIN</td><td>Reemplazar todos los datos</td><td>200</td></tr>
+<tr><td><span class="pill m-del">DELETE</span></td><td><code>/sneakers/{id}</code></td><td>ADMIN</td><td>Borrar (409 si tiene pedidos)</td><td>204 / 409</td></tr>
+<tr><td><span class="pill m-get">GET</span></td><td><code>/brands</code>, <code>/brands/{id}</code></td><td>Público</td><td>Marcas</td><td>200</td></tr>
+<tr><td><span class="pill m-post">POST</span></td><td><code>/brands</code></td><td>ADMIN</td><td>Crear marca</td><td>201 / 409</td></tr>
+<tr><td><span class="pill m-get">GET</span></td><td><code>/categories</code>, <code>/categories/{id}</code></td><td>Público</td><td>Categorías</td><td>200</td></tr>
+<tr><td><span class="pill m-post">POST</span></td><td><code>/categories</code></td><td>ADMIN</td><td>Crear categoría</td><td>201 / 409</td></tr>
+<tr><td><span class="pill m-post">POST</span></td><td><code>/orders</code></td><td>Con token</td><td>Comprar</td><td>201 / 400</td></tr>
+<tr><td><span class="pill m-get">GET</span></td><td><code>/orders</code></td><td>Con token</td><td>Admin: todos · Cliente: los suyos</td><td>200</td></tr>
+<tr><td><span class="pill m-get">GET</span></td><td><code>/orders/{id}</code></td><td>Con token</td><td>Uno (403 si es de otro cliente)</td><td>200 / 403</td></tr>
+<tr><td><span class="pill m-patch">PATCH</span></td><td><code>/orders/{id}/status</code></td><td>ADMIN</td><td>Cambiar estado</td><td>200 / 400</td></tr>
+</table></div>
+<div class="box info"><b>PUT vs PATCH</b><code>PUT</code> reemplaza el recurso completo (el formulario manda todos los campos del tenis). <code>PATCH</code> modifica una parte (solo el <code>status</code> del pedido).</div>
+</section>
+
+<section id="errores">
+<h2>15. Manejo de errores</h2>
+<p>En vez de llenar los controllers de <code>try/catch</code>, los services lanzan una excepción propia y una sola clase la convierte en JSON.</p>
+<span class="file">api/.../exception/ApiException.java</span>
+<pre><code><span class="k">public class</span> <span class="t">ApiException</span> <span class="k">extends</span> <span class="t">RuntimeException</span> {
+    <span class="k">private final</span> <span class="t">HttpStatus</span> status;
+    <span class="k">public static</span> <span class="t">ApiException</span> notFound(<span class="t">String</span> msg)  { <span class="k">return new</span> <span class="t">ApiException</span>(<span class="t">HttpStatus</span>.NOT_FOUND, msg); }
+    <span class="k">public static</span> <span class="t">ApiException</span> conflict(<span class="t">String</span> msg)  { ... <span class="c">// 409</span> }
+    ...
+}</code></pre>
+<span class="file">api/.../exception/GlobalExceptionHandler.java</span>
+<pre><code><span class="a">@RestControllerAdvice</span>             <span class="c">// "aplica a todos los controllers"</span>
+<span class="k">public class</span> <span class="t">GlobalExceptionHandler</span> {
+    <span class="a">@ExceptionHandler</span>(<span class="t">ApiException</span>.<span class="k">class</span>)                   <span class="c">// errores de negocio</span>
+    <span class="a">@ExceptionHandler</span>(<span class="t">MethodArgumentNotValidException</span>.<span class="k">class</span>) <span class="c">// falló @Valid → 400 con errores por campo</span>
+    <span class="a">@ExceptionHandler</span>(<span class="t">HttpMessageNotReadableException</span>.<span class="k">class</span>) <span class="c">// JSON mal formado</span>
+    <span class="a">@ExceptionHandler</span>(<span class="t">MethodArgumentTypeMismatchException</span>.<span class="k">class</span>) <span class="c">// ?brandId=abc</span>
+}</code></pre>
+<p>Todos los errores salen con la misma forma, y Flutter la aprovecha para mostrar el mensaje:</p>
+<pre><code>{ <span class="s">"status"</span>: 400, <span class="s">"message"</span>: <span class="s">"Datos inválidos"</span>,
+  <span class="s">"errors"</span>: { <span class="s">"price"</span>: <span class="s">"El precio debe ser mayor a 0"</span> },
+  <span class="s">"timestamp"</span>: <span class="s">"2026-11-06T10:15:30"</span> }</code></pre>
+<div class="tw"><table>
+<tr><th>Código</th><th>Significa</th><th>Ejemplo en SneakHub</th></tr>
+<tr><td>200 OK</td><td>Todo bien</td><td>Listar tenis</td></tr>
+<tr><td>201 Created</td><td>Se creó algo</td><td>Crear pedido</td></tr>
+<tr><td>204 No Content</td><td>Bien, sin cuerpo</td><td>Borrar tenis</td></tr>
+<tr><td>400 Bad Request</td><td>Datos mal</td><td>Sin stock, talla inexistente, campo vacío</td></tr>
+<tr><td>401 Unauthorized</td><td>No sé quién eres</td><td>Sin token, token vencido, contraseña errada</td></tr>
+<tr><td>403 Forbidden</td><td>Sé quién eres, pero no puedes</td><td>Cliente intentando crear un tenis</td></tr>
+<tr><td>404 Not Found</td><td>No existe</td><td>Tenis 999</td></tr>
+<tr><td>409 Conflict</td><td>Choca con lo que hay</td><td>Marca repetida, correo ya registrado</td></tr>
+</table></div>
+</section>
+
+<section id="seguridad">
+<h2>16. Seguridad, JWT y roles</h2>
+
+<h3>La cadena de filtros</h3>
+<p>Spring Security pone una serie de <strong>filtros</strong> <em>antes</em> de los controllers. Cada petición pasa por ellos: si no cumple las reglas, la rechazan y el controller ni se entera.</p>
+<div class="flow">
+  <div class="node"><h5>Petición HTTP</h5><small>con o sin token</small></div><div class="arrow">→</div>
+  <div class="node dark"><h5>Filtro JWT</h5><small>¿Hay Bearer? ¿Firma válida? ¿No venció? ¿Es tipo “access”?</small></div><div class="arrow">→</div>
+  <div class="node dark"><h5>Autorización</h5><small>¿Esta ruta es pública, requiere login o requiere ADMIN?</small></div><div class="arrow">→</div>
+  <div class="node hot"><h5>Controller</h5><small>Solo llega si pasó todo</small></div>
+</div>
+
+<span class="file">api/.../config/SecurityConfig.java (resumido)</span>
+<pre><code>http
+  .csrf(csrf -&gt; csrf.disable())          <span class="c">// sin cookies de sesión, CSRF no aplica</span>
+  .cors(<span class="t">Customizer</span>.withDefaults())       <span class="c">// permite llamadas desde Flutter Web</span>
+  .sessionManagement(s -&gt; s.sessionCreationPolicy(STATELESS)) <span class="c">// no guarda sesión en el servidor</span>
+  .authorizeHttpRequests(auth -&gt; auth
+      .requestMatchers(<span class="s">"/h2-console/**"</span>, <span class="s">"/error"</span>).permitAll()
+      .requestMatchers(POST, <span class="s">"/api/v1/auth/login"</span>, <span class="s">"/api/v1/auth/register"</span>, <span class="s">"/api/v1/auth/refresh"</span>).permitAll()
+      .requestMatchers(GET, CATALOG).permitAll()         <span class="c">// ver catálogo: público</span>
+      .requestMatchers(CATALOG).hasRole(<span class="s">"ADMIN"</span>)          <span class="c">// crear/editar/borrar: ADMIN</span>
+      .requestMatchers(PATCH, <span class="s">"/api/v1/orders/*/status"</span>).hasRole(<span class="s">"ADMIN"</span>)
+      .anyRequest().authenticated())                     <span class="c">// el resto: con token</span>
+  .oauth2ResourceServer(o -&gt; o.jwt(...));                <span class="c">// valida JWT en Authorization: Bearer</span></code></pre>
+<p>Las reglas se evalúan <strong>en orden</strong>; gana la primera que coincide. Por eso <code>GET CATALOG</code> (público) va antes que <code>CATALOG</code> (ADMIN).</p>
+
+<h3>¿Qué es un JWT?</h3>
+<p>Un <strong>JSON Web Token</strong> es un texto de tres partes separadas por puntos: <code>header.payload.firma</code>. El payload de SneakHub se ve así (en Base64 en el token):</p>
+<pre><code>{ <span class="s">"iss"</span>: <span class="s">"sneakhub-api"</span>, <span class="s">"sub"</span>: <span class="s">"cliente@sneakhub.com"</span>,
+  <span class="s">"role"</span>: <span class="s">"CUSTOMER"</span>, <span class="s">"type"</span>: <span class="s">"access"</span>,
+  <span class="s">"iat"</span>: 1762424130, <span class="s">"exp"</span>: 1762427730 }</code></pre>
+<ul>
+  <li>La <strong>firma</strong> se calcula con HMAC-SHA256 y la clave secreta <code>app.jwt.secret</code>. Si alguien cambia <code>CUSTOMER</code> por <code>ADMIN</code>, la firma ya no coincide y la API lo rechaza.</li>
+  <li>El payload <strong>no está cifrado</strong>, solo codificado: cualquiera puede leerlo (Flutter lo lee para saber el rol). Por eso no se ponen contraseñas ahí.</li>
+  <li>Es <strong>stateless</strong>: el servidor no guarda sesiones. Toda la información viaja en el token y basta con verificar la firma.</li>
+</ul>
+
+<h3>Access token y refresh token</h3>
+<div class="grid2">
+  <div class="card"><h4>Access (60 min)</h4><p>Se manda en cada petición. Dura poco: si lo roban, sirve por poco tiempo. Lleva <code>"type":"access"</code>.</p></div>
+  <div class="card"><h4>Refresh (7 días)</h4><p>Solo sirve para pedir tokens nuevos en <code>/auth/refresh</code>. Lleva <code>"type":"refresh"</code>. El <code>JwtConfig</code> tiene un validador que impide usar un refresh como access y al revés.</p></div>
+</div>
+
+<h3>Las clases que lo hacen</h3>
+<ul>
+  <li><strong><code>JwtConfig</code></strong>: crea los beans <code>SecretKey</code>, <code>JwtEncoder</code> (firma) y <code>JwtDecoder</code> (valida firma, fecha y que <code>type == "access"</code>).</li>
+  <li><strong><code>TokenService</code></strong>: arma los <em>claims</em> (sub = correo, role, type, exp) y genera los dos tokens.</li>
+  <li><strong><code>jwtAuthenticationConverter()</code></strong> en <code>SecurityConfig</code>: lee el claim <code>role</code> y lo convierte en la autoridad <code>ROLE_ADMIN</code> o <code>ROLE_CUSTOMER</code>. <code>hasRole("ADMIN")</code> busca justamente <code>ROLE_ADMIN</code>.</li>
+  <li><strong><code>PasswordEncoder</code></strong> (BCrypt): <code>encode()</code> al registrar, <code>matches()</code> al hacer login. BCrypt es un hash lento y con “sal”: el mismo texto da hashes distintos y no se puede revertir.</li>
+</ul>
+
+<h3>Flujo de login</h3>
+<ol class="steps">
+  <li>Flutter: <code>POST /auth/login</code> con <code>{"email","password"}</code>, sin token.</li>
+  <li><code>AuthService.login</code> busca por correo y compara la contraseña con <code>passwordEncoder.matches</code>.</li>
+  <li>Si coincide, <code>TokenService</code> genera los dos tokens y se responde <code>{access_token, refresh_token, token_type, expires_in}</code>.</li>
+  <li>Flutter guarda los tokens y desde ahí manda <code>Authorization: Bearer &lt;access&gt;</code>.</li>
+  <li>A los 60 minutos la API responde 401. Flutter llama solo a <code>/auth/refresh</code>, recibe tokens nuevos y repite la petición (ver sección 22).</li>
+</ol>
+
+<div class="box info"><b>CORS</b>El navegador bloquea las peticiones de una página (<code>localhost:5xxx</code>, Flutter Web) a otro origen (<code>localhost:8081</code>) salvo que el servidor lo permita. <code>corsConfigurationSource()</code> permite cualquier origen y los métodos GET, POST, PUT, PATCH, DELETE. En Android o escritorio no aplica: CORS es solo cosa de navegadores.</div>
+<div class="box warn"><b>Detalle real del proyecto</b>Si una petición a una ruta pública lleva un token <em>inválido</em>, Spring responde 401 igual. Por eso Flutter nunca manda token a login, register ni refresh (<code>ApiConfig.publicAuth</code>).</div>
+</section>
+
+<section id="seeder">
+<h2>17. DataSeeder: los datos de ejemplo</h2>
+<pre><code><span class="a">@Component</span>
+<span class="k">public class</span> <span class="t">DataSeeder</span> <span class="k">implements</span> <span class="t">CommandLineRunner</span> {
+    <span class="a">@Override</span> <span class="a">@Transactional</span>
+    <span class="k">public void</span> run(<span class="t">String</span>... args) {
+        <span class="k">if</span> (users.count() &gt; 0) <span class="k">return</span>;   <span class="c">// ya hay datos: no hace nada</span>
+        users.save(<span class="k">new</span> <span class="t">User</span>(<span class="s">"Administrador SneakHub"</span>, <span class="s">"admin@sneakhub.com"</span>, passwordEncoder.encode(<span class="s">"admin123"</span>), <span class="t">Role</span>.ADMIN, ...));
+        ...
+    }
+}</code></pre>
+<p><code>CommandLineRunner</code> es una interfaz de Spring Boot: todo bean que la implemente se ejecuta una vez, justo después de arrancar. Crea:</p>
+<ul>
+  <li><strong>Usuarios:</strong> <code>admin@sneakhub.com / admin123</code> (ADMIN) y <code>cliente@sneakhub.com / cliente123</code> (CUSTOMER).</li>
+  <li><strong>Marcas:</strong> Nike, Adidas, Puma, New Balance, Converse, Vans.</li>
+  <li><strong>Categorías:</strong> Running, Basketball, Lifestyle, Skate, Training.</li>
+  <li><strong>16 tenis</strong> con tallas, colores, precio, stock (uno agotado, el Vans Sk8-Hi) e imágenes de relleno de placehold.co.</li>
+</ul>
+</section>
+
+<section id="recorrido-spring">
+<h2>18. Una petición, clase por clase</h2>
+<p>Ejemplo: el admin cancela el pedido 7 → <code>PATCH /api/v1/orders/7/status</code> con <code>{"status":"CANCELADO"}</code>.</p>
+<ol class="steps">
+  <li><strong>Tomcat</strong> recibe la conexión en el 8081 y se la pasa a Spring.</li>
+  <li><strong>Filtros de Spring Security:</strong> CORS ok → el <code>JwtDecoder</code> valida el token → el converter crea la autenticación con <code>ROLE_ADMIN</code> → la regla <code>PATCH /api/v1/orders/*/status → hasRole("ADMIN")</code> se cumple.</li>
+  <li><strong>DispatcherServlet</strong> encuentra <code>OrderController.updateStatus</code>.</li>
+  <li><strong>Jackson</strong> convierte el JSON en <code>StatusRequest</code>; el texto <code>"CANCELADO"</code> se convierte en el enum <code>OrderStatus.CANCELADO</code>. <code>@Valid</code> revisa <code>@NotNull</code>.</li>
+  <li><strong>OrderService.updateStatus</strong> abre la transacción y busca el pedido (<code>orders.findById</code>). Si ya estaba cancelado lanza 400; si no, devuelve el stock de cada ítem y cambia el estado.</li>
+  <li><strong>Hibernate</strong>, al cerrar la transacción, detecta los cambios (dirty checking) y ejecuta los <code>UPDATE</code> de <code>sneakers</code> y <code>orders</code>.</li>
+  <li>El service devuelve <code>OrderResponse.from(order)</code>; <strong>Jackson</strong> lo pasa a JSON y se responde 200.</li>
+  <li>Si algo lanzó <code>ApiException</code>, el <strong>GlobalExceptionHandler</strong> arma el JSON de error.</li>
+</ol>
+</section>
+
+<!-- ============================ FLUTTER ============================ -->
+<h2 class="part-title"><span>PARTE 2</span>Flutter</h2>
+
+<section id="flutter">
+<h2>19. Qué es Flutter</h2>
+<p><strong>Flutter</strong> es un framework de Google para hacer interfaces con un solo código para Android, iOS, web y escritorio. Se programa en <strong>Dart</strong>, un lenguaje con tipos, clases y <code>async/await</code>, muy parecido a Java.</p>
+
+<h3>Todo es un widget</h3>
+<p>Un <strong>widget</strong> es una pieza de interfaz: un texto, un botón, un margen, una pantalla entera. Las pantallas se arman como un <strong>árbol</strong> de widgets anidados:</p>
+<pre><code><span class="t">Scaffold</span>(                         <span class="c">// estructura de pantalla</span>
+  appBar: <span class="t">AppBar</span>(title: <span class="t">Text</span>(<span class="s">'Catálogo'</span>)),
+  body: <span class="t">Column</span>(children: [          <span class="c">// uno debajo del otro</span>
+    <span class="t">TextField</span>(...),                 <span class="c">// buscador</span>
+    <span class="t">Expanded</span>(child: <span class="t">GridView</span>(...)), <span class="c">// grilla de tarjetas</span>
+  ]),
+)</code></pre>
+
+<div class="grid2">
+  <div class="card"><h4>StatelessWidget</h4><p>No cambia por sí solo; se dibuja con los datos que recibe. Ej: <code>SneakerCard</code>, <code>StatusChip</code>.</p></div>
+  <div class="card"><h4>StatefulWidget</h4><p>Tiene estado interno que cambia. Llamas <code>setState(() { ... })</code> y Flutter vuelve a ejecutar <code>build()</code>. Ej: el login (<code>_loading</code>, <code>_obscure</code>), la galería de imágenes (<code>_page</code>).</p></div>
+</div>
+<p>Con Riverpod aparecen dos variantes: <code>ConsumerWidget</code> y <code>ConsumerStatefulWidget</code>, que además reciben un <code>ref</code> para leer providers (sección 24).</p>
+
+<h3>Dart en 30 segundos (comparado con Java)</h3>
+<div class="tw"><table>
+<tr><th>Dart</th><th>Equivale en Java a</th></tr>
+<tr><td><code>final x = 3;</code></td><td><code>final var x = 3;</code></td></tr>
+<tr><td><code>String? name</code></td><td>Puede ser null. Sin <code>?</code> el compilador garantiza que no lo es (null safety).</td></tr>
+<tr><td><code>Future&lt;List&lt;Sneaker&gt;&gt;</code></td><td><code>CompletableFuture</code>: un valor que llegará después.</td></tr>
+<tr><td><code>await</code> dentro de <code>async</code></td><td>Espera el Future sin bloquear la pantalla.</td></tr>
+<tr><td><code>Map&lt;String, dynamic&gt;</code></td><td><code>Map&lt;String, Object&gt;</code>: así llega el JSON.</td></tr>
+<tr><td><code>factory Sneaker.fromJson(...)</code></td><td>Constructor con nombre que puede devolver un objeto armado.</td></tr>
+<tr><td><code>_nombre</code></td><td><code>private</code> (en Dart el guion bajo lo hace privado al archivo).</td></tr>
+</table></div>
+</section>
+
+<section id="carpetas">
+<h2>20. Estructura de lib/</h2>
+<p>La app también está separada por responsabilidades, igual que la API:</p>
+<div class="tw"><table>
+<tr><th>Carpeta</th><th>Responsabilidad</th><th>Archivos</th></tr>
+<tr><td><code>main.dart</code></td><td>Punto de entrada: arranca la app, tema, idioma, router.</td><td>—</td></tr>
+<tr><td><code>config/api/</code></td><td>Dónde está la API y el cliente HTTP con el token.</td><td><code>api_config.dart</code>, <code>api_client.dart</code></td></tr>
+<tr><td><code>config/router/</code></td><td>Todas las rutas y quién puede entrar a cada una.</td><td><code>router_config.dart</code></td></tr>
+<tr><td><code>config/theme/</code></td><td>Colores, tipografía y estilo de los componentes.</td><td><code>app_theme.dart</code></td></tr>
+<tr><td><code>model/</code></td><td>Clases de datos y conversión JSON → Dart (<code>fromJson</code>).</td><td><code>Sneaker</code>, <code>Order</code>, <code>UserModel</code>, <code>Brand</code>, <code>Category</code>, <code>AuthModel</code></td></tr>
+<tr><td><code>services/</code></td><td>Una función por endpoint. Solo hablan con la API.</td><td><code>AuthService</code>, <code>SneakerService</code>, <code>CatalogService</code>, <code>OrderService</code></td></tr>
+<tr><td><code>providers/</code></td><td>Estado de la app (Riverpod): datos cargados, carrito, filtros, tema, idioma.</td><td><code>data_providers</code>, <code>cart_provider</code>, <code>theme_provider</code>, <code>language_provider</code></td></tr>
+<tr><td><code>presentation/</code></td><td>Pantallas y widgets (lo que se ve).</td><td><code>public/</code> (login, registro), <code>admin/</code> (zona con sesión), <code>widgets/</code> (reutilizables)</td></tr>
+<tr><td><code>helpers/</code></td><td>Utilidades: storage, leer JWT, mensajes de error, formato de precio y fecha, etiquetas, logout.</td><td>—</td></tr>
+<tr><td><code>l10n/</code></td><td>Textos en español e inglés.</td><td><code>app_es.arb</code>, <code>app_en.arb</code></td></tr>
+</table></div>
+
+<h3>Relación con MVC (o MVVM)</h3>
+<div class="flow">
+  <div class="node hot"><h5>View</h5><small><code>presentation/</code>: pantallas que se dibujan según el estado</small></div><div class="arrow">⇄</div>
+  <div class="node dark"><h5>ViewModel / estado</h5><small><code>providers/</code>: guardan datos y avisan cuando cambian</small></div><div class="arrow">→</div>
+  <div class="node"><h5>Services</h5><small><code>services/</code>: piden datos a la API</small></div><div class="arrow">→</div>
+  <div class="node"><h5>Model</h5><small><code>model/</code>: clases de datos</small></div>
+</div>
+<p>En Flutter es más parecido a <strong>MVVM</strong> (Model-View-ViewModel): la vista no pide datos directamente, observa un provider. Cuando el provider cambia, la vista se redibuja sola.</p>
+</section>
+
+<section id="main">
+<h2>21. main.dart</h2>
+<span class="file">lib/main.dart (resumido)</span>
+<pre><code><span class="k">void</span> main() {
+  <span class="k">final</span> container = <span class="t">ProviderContainer</span>(retry: (_, _) =&gt; <span class="k">null</span>); <span class="c">// estado global, sin reintentos automáticos</span>
+  <span class="t">ApiClient</span>.onSessionExpired = () {        <span class="c">// si el refresh también venció…</span>
+    container.invalidate(cartProvider);
+    appRouter.goNamed(<span class="s">'login'</span>);             <span class="c">// …volver al login</span>
+  };
+  runApp(<span class="t">UncontrolledProviderScope</span>(container: container, child: <span class="k">const</span> <span class="t">MainApp</span>()));
+}
+
+<span class="k">class</span> <span class="t">MainApp</span> <span class="k">extends</span> <span class="t">ConsumerWidget</span> {
+  <span class="t">Widget</span> build(context, ref) =&gt; <span class="t">MaterialApp</span>.router(
+    routerConfig: appRouter,                                  <span class="c">// navegación</span>
+    theme: <span class="t">AppTheme</span>.themeData(isDark: <span class="k">false</span>),               <span class="c">// estilo claro</span>
+    darkTheme: <span class="t">AppTheme</span>.themeData(isDark: <span class="k">true</span>),            <span class="c">// estilo oscuro</span>
+    themeMode: ref.watch(themeProvider) ? <span class="t">ThemeMode</span>.dark : <span class="t">ThemeMode</span>.light,
+    locale: ref.watch(languageProvider),                      <span class="c">// es / en</span>
+    localizationsDelegates: [...],
+  );
+}</code></pre>
+<p>Al cambiar el tema o el idioma, el provider cambia, <code>MainApp</code> se redibuja y toda la app cambia de inmediato.</p>
+</section>
+
+<section id="consumo">
+<h2>22. Cómo se consume la API</h2>
+<p class="lead">Este es el corazón de la conexión. Son cuatro piezas en cadena.</p>
+<div class="flow">
+  <div class="node"><h5>ApiConfig</h5><small>Dónde está la API y las rutas</small></div><div class="arrow">→</div>
+  <div class="node dark"><h5>ApiClient (Dio)</h5><small>Hace las peticiones, pega el token y renueva</small></div><div class="arrow">→</div>
+  <div class="node dark"><h5>Services</h5><small>Una función por endpoint</small></div><div class="arrow">→</div>
+  <div class="node hot"><h5>Models</h5><small>JSON → objetos Dart</small></div>
+</div>
+
+<h3>1. ApiConfig: la dirección</h3>
+<span class="file">lib/config/api/api_config.dart</span>
+<pre><code><span class="k">static</span> <span class="t">String</span> <span class="k">get</span> baseUrl {
+  <span class="k">final</span> host = !kIsWeb &amp;&amp; defaultTargetPlatform == <span class="t">TargetPlatform</span>.android
+      ? <span class="s">'10.0.2.2'</span>   <span class="c">// emulador Android: así se llega al PC</span>
+      : <span class="s">'localhost'</span>;  <span class="c">// web y escritorio</span>
+  <span class="k">return</span> <span class="s">'http://$host:$port/api/v1'</span>;
+}
+<span class="k">static const</span> <span class="t">String</span> sneakers = <span class="s">'/sneakers'</span>;  <span class="c">// rutas relativas</span></code></pre>
+<div class="box info"><b>¿Por qué 10.0.2.2?</b>Dentro del emulador de Android, <code>localhost</code> es el propio emulador, no tu PC. Android reserva <code>10.0.2.2</code> para apuntar al PC. En un celular físico se usa la IP del PC en el wifi (ej. <code>192.168.1.10</code>).</div>
+
+<h3>2. ApiClient: Dio con interceptor</h3>
+<p><strong>Dio</strong> es el cliente HTTP. Se crea una sola instancia compartida con la URL base y tiempos de espera de 10 s. Lo importante es el <strong>interceptor</strong>: código que se ejecuta antes de cada petición y cuando llega un error.</p>
+<span class="file">lib/config/api/api_client.dart (resumido)</span>
+<pre><code><span class="k">class</span> <span class="t">_AuthInterceptor</span> <span class="k">extends</span> <span class="t">QueuedInterceptor</span> {
+  <span class="c">// ANTES de cada petición: pegar el token (menos en login/register/refresh)</span>
+  onRequest(options, handler) <span class="k">async</span> {
+    <span class="k">if</span> (!<span class="t">ApiConfig</span>.publicAuth.contains(options.path)) {
+      <span class="k">final</span> token = <span class="k">await</span> storage.read(key: <span class="t">StorageKeys</span>.token);
+      <span class="k">if</span> (token != <span class="k">null</span>) options.headers[<span class="s">'Authorization'</span>] = <span class="s">'Bearer $token'</span>;
+    }
+    handler.next(options);
+  }
+
+  <span class="c">// SI LLEGA UN ERROR: si es 401, renovar el token y repetir la petición</span>
+  onError(err, handler) <span class="k">async</span> {
+    <span class="k">if</span> (err.response?.statusCode != 401) <span class="k">return</span> handler.next(err);
+    <span class="k">final</span> token = <span class="k">await</span> _refresh();                 <span class="c">// POST /auth/refresh</span>
+    <span class="k">if</span> (token == <span class="k">null</span>) {                            <span class="c">// también venció el refresh</span>
+      <span class="k">await</span> clearTokens(); <span class="t">ApiClient</span>.onSessionExpired?.call(); <span class="c">// → login</span>
+      <span class="k">return</span> handler.next(err);
+    }
+    err.requestOptions.headers[<span class="s">'Authorization'</span>] = <span class="s">'Bearer $token'</span>;
+    handler.resolve(<span class="k">await</span> _plain.fetch(err.requestOptions)); <span class="c">// repetir</span>
+  }
+}</code></pre>
+<p>Así ninguna pantalla tiene que preocuparse por el token: el usuario ni nota que venció. Es <code>QueuedInterceptor</code> para que, si fallan 3 peticiones a la vez, el refresh se haga <strong>una sola vez</strong> y las demás esperen en cola.</p>
+
+<h3>3. Services: una función por endpoint</h3>
+<span class="file">lib/services/sneakers/sneaker_service.dart</span>
+<pre><code><span class="k">class</span> <span class="t">SneakerService</span> {
+  <span class="k">static</span> <span class="t">Future</span>&lt;<span class="t">List</span>&lt;<span class="t">Sneaker</span>&gt;&gt; findAll([<span class="t">SneakerFilter</span> filter = <span class="k">const</span> <span class="t">SneakerFilter</span>()]) <span class="k">async</span> {
+    <span class="k">final</span> response = <span class="k">await</span> <span class="t">ApiClient</span>.dio.get(
+      <span class="t">ApiConfig</span>.sneakers,                     <span class="c">// GET /api/v1/sneakers</span>
+      queryParameters: filter.toQuery(),     <span class="c">// ?brandId=1&amp;q=air (solo los usados)</span>
+    );
+    <span class="k">return</span> (response.data <span class="k">as</span> <span class="t">List</span>)            <span class="c">// Dio ya decodificó el JSON</span>
+        .map((e) =&gt; <span class="t">Sneaker</span>.fromJson(e))     <span class="c">// cada Map → Sneaker</span>
+        .toList();
+  }
+  <span class="k">static</span> <span class="t">Future</span>&lt;<span class="t">Sneaker</span>&gt; create(<span class="t">Map</span>&lt;<span class="t">String</span>, <span class="k">dynamic</span>&gt; data) <span class="k">async</span> {
+    <span class="k">final</span> response = <span class="k">await</span> <span class="t">ApiClient</span>.dio.post(<span class="t">ApiConfig</span>.sneakers, data: data); <span class="c">// Map → JSON</span>
+    <span class="k">return</span> <span class="t">Sneaker</span>.fromJson(response.data);
+  }
+}</code></pre>
+<p>Si la API responde con error (4xx o 5xx), Dio lanza una <code>DioException</code>. Los services no la atrapan: la dejan subir hasta la pantalla, que la convierte en texto con <code>apiErrorMessage()</code>. Esa función usa el <code>message</code> y los <code>errors</code> que manda el <code>GlobalExceptionHandler</code> de Spring.</p>
+
+<h3>4. Models: del JSON al objeto</h3>
+<span class="file">lib/model/sneaker/sneaker_model.dart (resumido)</span>
+<pre><code><span class="k">factory</span> <span class="t">Sneaker</span>.fromJson(<span class="t">Map</span>&lt;<span class="t">String</span>, <span class="k">dynamic</span>&gt; json) =&gt; <span class="t">Sneaker</span>(
+  id: json[<span class="s">'id'</span>] <span class="k">as</span> <span class="t">int</span>,
+  name: json[<span class="s">'name'</span>] ?? <span class="s">''</span>,
+  price: (json[<span class="s">'price'</span>] <span class="k">as</span> <span class="t">num</span>).toDouble(),       <span class="c">// 649900 o 649900.0</span>
+  sizes: <span class="t">List</span>&lt;<span class="t">int</span>&gt;.from(json[<span class="s">'sizes'</span>] ?? []),
+  brand: <span class="t">Brand</span>.fromJson(json[<span class="s">'brand'</span>]),             <span class="c">// objeto anidado</span>
+  ...
+);</code></pre>
+<div class="tw"><table>
+<tr><th>Java (SneakerResponse)</th><th>JSON</th><th>Dart (Sneaker)</th></tr>
+<tr><td><code>Long id</code></td><td><code>"id": 1</code></td><td><code>int id</code></td></tr>
+<tr><td><code>Double price</code></td><td><code>"price": 649900.0</code></td><td><code>double price</code></td></tr>
+<tr><td><code>Gender gender</code> (enum)</td><td><code>"gender": "UNISEX"</code></td><td><code>String gender</code></td></tr>
+<tr><td><code>List&lt;Integer&gt; sizes</code></td><td><code>"sizes": [38, 39]</code></td><td><code>List&lt;int&gt; sizes</code></td></tr>
+<tr><td><code>BrandResponse brand</code></td><td><code>"brand": {"id":1,"name":"Nike"}</code></td><td><code>Brand brand</code></td></tr>
+<tr><td><code>LocalDateTime createdAt</code></td><td><code>"createdAt": "2026-11-06T10:15:30"</code></td><td><code>DateTime createdAt</code></td></tr>
+</table></div>
+<div class="box idea"><b>El contrato</b>Los DTOs de Java y los modelos de Dart son dos lados del mismo contrato: si en Java cambias un nombre de campo, el <code>fromJson</code> de Dart debe cambiar igual. Las pruebas de <code>test/cart_test.dart</code> verifican justo ese formato.</div>
+</section>
+
+<section id="storage">
+<h2>23. Dónde se guarda el token</h2>
+<div class="grid2">
+  <div class="card"><h4>flutter_secure_storage</h4><p>Para los <strong>tokens</strong>. En Android usa el Keystore cifrado; en web usa almacenamiento del navegador cifrado. Funciones en <code>helpers/storage.dart</code>: <code>saveTokens()</code>, <code>clearTokens()</code>.</p></div>
+  <div class="card"><h4>shared_preferences</h4><p>Para <strong>preferencias</strong> no sensibles: modo oscuro e idioma. Los providers de tema e idioma las leen al arrancar y las guardan al cambiar.</p></div>
+</div>
+<p>Como el token se guarda, si cierras y abres la app sigues logueado. El router lee el token y saca el rol con <code>decodeJwtPayload()</code>, que decodifica el Base64 del payload (sin verificar la firma, porque eso lo hace la API).</p>
+</section>
+
+<section id="riverpod">
+<h2>24. Estado con Riverpod</h2>
+<p><strong>Estado</strong> es cualquier dato que puede cambiar y que la pantalla debe mostrar: la lista de tenis, el carrito, el filtro, el usuario. <strong>Riverpod</strong> los guarda en <strong>providers</strong>: “cajitas” globales que las pantallas pueden leer y observar.</p>
+
+<h3>Tipos de provider en el proyecto</h3>
+<div class="tw"><table>
+<tr><th>Tipo</th><th>Para qué</th><th>Ejemplo</th></tr>
+<tr><td><code>FutureProvider</code></td><td>Datos que vienen de la API (asíncronos).</td><td><code>sneakersProvider</code>, <code>ordersProvider</code>, <code>profileProvider</code>, <code>brandsProvider</code></td></tr>
+<tr><td><code>FutureProvider.family</code></td><td>Lo mismo, pero con parámetro.</td><td><code>sneakerProvider(id)</code>, <code>orderProvider(id)</code></td></tr>
+<tr><td><code>NotifierProvider</code></td><td>Estado que tú modificas con métodos.</td><td><code>cartProvider</code>, <code>sneakerFilterProvider</code>, <code>themeProvider</code>, <code>languageProvider</code></td></tr>
+<tr><td><code>.autoDispose</code></td><td>Se borra cuando ninguna pantalla lo usa. Así, al cambiar de usuario, se vuelve a pedir todo.</td><td>Todos los de datos</td></tr>
+</table></div>
+
+<span class="file">lib/providers/data_providers.dart</span>
+<pre><code><span class="c">// El catálogo depende del filtro: si el filtro cambia, se vuelve a pedir a la API solo.</span>
+<span class="k">final</span> sneakersProvider = <span class="t">FutureProvider</span>.autoDispose&lt;<span class="t">List</span>&lt;<span class="t">Sneaker</span>&gt;&gt;(
+  (ref) =&gt; <span class="t">SneakerService</span>.findAll(ref.watch(sneakerFilterProvider)),
+);</code></pre>
+<p>Esa línea es poderosa: al tocar el chip “Mujer”, el filtro cambia, <code>sneakersProvider</code> se recalcula, llama a la API con <code>?gender=MUJER</code> y la grilla se redibuja. Ninguna pantalla tiene que coordinar nada.</p>
+
+<h3>ref.watch, ref.read y ref.invalidate</h3>
+<div class="tw"><table>
+<tr><th>Método</th><th>Qué hace</th><th>Dónde se usa</th></tr>
+<tr><td><code>ref.watch(p)</code></td><td>Lee <strong>y se suscribe</strong>: si cambia, el widget se redibuja.</td><td>Dentro de <code>build()</code></td></tr>
+<tr><td><code>ref.read(p)</code></td><td>Lee una vez, sin suscribirse.</td><td>En eventos: <code>onPressed</code>, <code>_checkout()</code></td></tr>
+<tr><td><code>ref.invalidate(p)</code></td><td>Tira el valor y obliga a recalcularlo (volver a pedir a la API).</td><td>Después de crear, editar o comprar; botón reintentar</td></tr>
+</table></div>
+
+<h3>AsyncValue: cargando / error / datos</h3>
+<p>Un <code>FutureProvider</code> no da la lista directamente, da un <code>AsyncValue</code> con tres estados posibles. El widget reutilizable <code>AsyncView</code> los dibuja:</p>
+<pre><code>value.when(
+  loading: () =&gt; <span class="t">CircularProgressIndicator</span>(),                   <span class="c">// esperando a la API</span>
+  error: (e, _) =&gt; <span class="t">ErrorView</span>(message: apiErrorMessage(e, t), onRetry: ...), <span class="c">// falló</span>
+  data: builder,                                              <span class="c">// llegaron los datos</span>
+)</code></pre>
+
+<h3>El carrito: un Notifier</h3>
+<span class="file">lib/providers/cart_provider.dart (resumido)</span>
+<pre><code><span class="k">class</span> <span class="t">CartNotifier</span> <span class="k">extends</span> <span class="t">Notifier</span>&lt;<span class="t">List</span>&lt;<span class="t">CartItem</span>&gt;&gt; {
+  <span class="t">List</span>&lt;<span class="t">CartItem</span>&gt; build() =&gt; <span class="k">const</span> [];             <span class="c">// estado inicial: vacío</span>
+
+  <span class="t">bool</span> add(<span class="t">Sneaker</span> sneaker, <span class="t">int</span> size, <span class="t">int</span> quantity) {
+    <span class="k">if</span> (quantityOf(sneaker.id) + quantity &gt; sneaker.stock) <span class="k">return false</span>; <span class="c">// misma regla que la API</span>
+    state = [...state, <span class="t">CartItem</span>(...)];                <span class="c">// nueva lista → avisa a las pantallas</span>
+    <span class="k">return true</span>;
+  }
+}</code></pre>
+<p>El estado es <strong>inmutable</strong>: no se hace <code>state.add(x)</code>, se asigna una <em>lista nueva</em>. Riverpod compara la referencia, y si es otra, avisa a todos los que hacen <code>watch</code> (el badge del carrito, la pantalla del carrito, el detalle).</p>
+<div class="box info"><b>Validar en los dos lados</b>El carrito valida el stock para dar respuesta inmediata al usuario, pero <strong>la API vuelve a validar</strong> al crear el pedido. Nunca se confía solo en el cliente: alguien podría llamar a la API con Postman.</div>
+</section>
+
+<section id="router">
+<h2>25. Navegación con go_router</h2>
+<p>Cada pantalla tiene una <strong>URL</strong> (en la web se ve en la barra del navegador):</p>
+<div class="tw"><table>
+<tr><th>Ruta</th><th>Pantalla</th><th>Quién</th></tr>
+<tr><td><code>/</code></td><td>Login</td><td>Sin sesión</td></tr>
+<tr><td><code>/register</code></td><td>Registro</td><td>Sin sesión</td></tr>
+<tr><td><code>/admin/home</code></td><td>Inicio (panel o bienvenida según el rol)</td><td>Todos</td></tr>
+<tr><td><code>/admin/sneakers</code></td><td>Catálogo</td><td>Todos</td></tr>
+<tr><td><code>/admin/sneakers/:id</code></td><td>Detalle</td><td>Todos</td></tr>
+<tr><td><code>/admin/sneakers/new</code>, <code>/:id/edit</code></td><td>Formulario</td><td>ADMIN</td></tr>
+<tr><td><code>/admin/brands</code>, <code>/admin/categories</code></td><td>Marcas, categorías</td><td>ADMIN</td></tr>
+<tr><td><code>/admin/cart</code></td><td>Carrito</td><td>CUSTOMER</td></tr>
+<tr><td><code>/admin/orders</code>, <code>/admin/orders/:id</code></td><td>Pedidos y detalle</td><td>Todos</td></tr>
+<tr><td><code>/admin/profile</code></td><td>Perfil</td><td>Todos</td></tr>
+</table></div>
+
+<h3>ShellRoute: el menú que envuelve todo</h3>
+<p>Las rutas de <code>/admin/...</code> están dentro de un <code>ShellRoute</code> cuyo builder es <code>AdminLayout</code>: el menú lateral y la barra superior se quedan fijos y solo cambia el contenido. Los detalles y formularios usan <code>parentNavigatorKey: rootNavigatorKey</code> para abrirse <em>encima</em>, a pantalla completa, con botón atrás.</p>
+
+<h3>redirect: el guardia de las rutas</h3>
+<span class="file">lib/config/router/router_config.dart</span>
+<pre><code>redirect: (context, state) <span class="k">async</span> {
+  <span class="k">final</span> role = <span class="k">await</span> <span class="t">AuthService</span>.currentRole();            <span class="c">// lee el rol del JWT guardado</span>
+  <span class="k">if</span> (role == <span class="k">null</span>) <span class="k">return</span> isPublic ? <span class="k">null</span> : <span class="s">'/'</span>;          <span class="c">// sin sesión → login</span>
+  <span class="k">if</span> (isPublic) <span class="k">return</span> <span class="s">'/admin/home'</span>;                       <span class="c">// con sesión no vuelve al login</span>
+  <span class="k">if</span> (role != <span class="s">'ADMIN'</span> &amp;&amp; _isAdminOnly(location)) <span class="k">return</span> <span class="s">'/admin/home'</span>;
+  <span class="k">if</span> (role == <span class="s">'ADMIN'</span> &amp;&amp; location == <span class="s">'/admin/cart'</span>) <span class="k">return</span> <span class="s">'/admin/home'</span>;
+  <span class="k">return null</span>;                                             <span class="c">// null = dejar pasar</span>
+}</code></pre>
+<p>Se ejecuta <strong>antes de cada navegación</strong>. Es solo para la experiencia de usuario: la seguridad real está en la API (un cliente que fuerce la URL igual recibiría 403).</p>
+
+<div class="tw"><table>
+<tr><th>Método</th><th>Efecto</th></tr>
+<tr><td><code>context.go('/admin/orders')</code></td><td>Reemplaza la ubicación (como cambiar de pestaña).</td></tr>
+<tr><td><code>context.push('/admin/sneakers/5')</code></td><td>Apila una pantalla encima; el botón atrás vuelve.</td></tr>
+<tr><td><code>context.pop()</code></td><td>Cierra la pantalla de arriba.</td></tr>
+<tr><td><code>context.goNamed('login')</code></td><td>Navega por nombre en vez de por ruta.</td></tr>
+</table></div>
+</section>
+
+<section id="pantallas">
+<h2>26. Pantallas y componentes</h2>
+<div class="tw"><table>
+<tr><th>Pantalla</th><th>Qué hace</th><th>Usa</th></tr>
+<tr><td><code>AuthScreen</code></td><td>Login con validación de correo y contraseña.</td><td><code>AuthService.login</code></td></tr>
+<tr><td><code>RegisterScreen</code></td><td>Crear cuenta de cliente (confirma la contraseña).</td><td><code>AuthService.register</code></td></tr>
+<tr><td><code>AdminLayout</code></td><td>Espera el perfil y arma el menú según el rol. Menú lateral (NavigationRail) en pantallas anchas y cajón (Drawer) en el celular. Badge del carrito, idioma, tema, salir.</td><td><code>profileProvider</code>, <code>cartProvider</code></td></tr>
+<tr><td><code>HomeScreen</code></td><td>Admin: ventas, stock bajo, pendientes, últimos pedidos. Cliente: bienvenida, sus números y novedades.</td><td><code>allSneakersProvider</code>, <code>ordersProvider</code></td></tr>
+<tr><td><code>SneakersScreen</code></td><td>Buscador (espera 400 ms antes de pedir, lo que se llama <em>debounce</em>), filtros por marca, categoría y género, grilla. El admin ve “Nuevo tenis”.</td><td><code>sneakersProvider</code>, <code>sneakerFilterProvider</code></td></tr>
+<tr><td><code>SneakerDetailScreen</code></td><td>Galería, tallas, cantidad, agregar al carrito. El admin puede editar y borrar.</td><td><code>sneakerProvider(id)</code>, <code>cartProvider</code></td></tr>
+<tr><td><code>SneakerFormScreen</code></td><td>Crear o editar: campos, dropdowns de marca y categoría, tallas como chips (34–46), lista de URLs de imágenes.</td><td><code>SneakerService.create/update</code></td></tr>
+<tr><td><code>BrandsScreen</code>, <code>CategoriesScreen</code></td><td>Lista y diálogo para crear.</td><td><code>CatalogService</code></td></tr>
+<tr><td><code>CartScreen</code></td><td>Líneas con cantidad, total y “Comprar”.</td><td><code>cartProvider</code>, <code>OrderService.create</code></td></tr>
+<tr><td><code>OrdersScreen</code></td><td>Lista de pedidos con filtro por estado.</td><td><code>ordersProvider</code></td></tr>
+<tr><td><code>OrderDetailScreen</code></td><td>Ítems, total y línea de tiempo del estado. El admin cambia el estado (pide confirmación al cancelar).</td><td><code>orderProvider(id)</code>, <code>OrderService.updateStatus</code></td></tr>
+<tr><td><code>ProfileScreen</code></td><td>Datos del usuario y cerrar sesión.</td><td><code>profileProvider</code></td></tr>
+</table></div>
+
+<h3>Widgets reutilizables (<code>presentation/widgets/</code>)</h3>
+<div class="tw"><table>
+<tr><th>Widget</th><th>Para qué</th></tr>
+<tr><td><code>AsyncView</code>, <code>ErrorView</code>, <code>EmptyState</code></td><td>Cargando, error con “Reintentar” y lista vacía, iguales en todas las pantallas.</td></tr>
+<tr><td><code>SneakerCard</code></td><td>Tarjeta de producto del catálogo.</td></tr>
+<tr><td><code>SneakerImage</code></td><td>Imagen de red con carga y, si falla, la marca en grande.</td></tr>
+<tr><td><code>StatusChip</code></td><td>Estado del pedido con color e ícono.</td></tr>
+<tr><td><code>UserAvatar</code></td><td>Foto del usuario o sus iniciales.</td></tr>
+<tr><td><code>QuantityStepper</code></td><td>Botones − cantidad +, con límite.</td></tr>
+<tr><td><code>BrandLogo</code>, <code>Tag</code>, <code>SectionTitle</code>, <code>MaxWidth</code></td><td>Logo, etiquetas, títulos y ancho máximo en pantallas grandes.</td></tr>
+<tr><td><code>showSnack</code>, <code>confirmDialog</code>, <code>CatalogDialog</code></td><td>Mensajes, confirmaciones y el diálogo de crear marca o categoría.</td></tr>
+</table></div>
+<p>Reutilizar widgets es el equivalente a no repetir código en Java: si cambias <code>SneakerCard</code>, cambia en el inicio y en el catálogo a la vez.</p>
+</section>
+
+<section id="formularios">
+<h2>27. Formularios y validación</h2>
+<pre><code><span class="k">final</span> _formKey = <span class="t">GlobalKey</span>&lt;<span class="t">FormState</span>&gt;();     <span class="c">// "control remoto" del formulario</span>
+
+<span class="t">Form</span>(key: _formKey, child: <span class="t">Column</span>(children: [
+  <span class="t">TextFormField</span>(
+    controller: _emailController,               <span class="c">// guarda lo escrito</span>
+    validator: (value) {                        <span class="c">// devuelve el error o null</span>
+      <span class="k">if</span> (value!.trim().isEmpty) <span class="k">return</span> t.emailRequired;
+      <span class="k">if</span> (!_emailRegex.hasMatch(value)) <span class="k">return</span> t.emailInvalid;
+      <span class="k">return null</span>;
+    },
+  ),
+]));
+
+<span class="c">// Al pulsar el botón:</span>
+<span class="k">if</span> (!_formKey.currentState!.validate()) <span class="k">return</span>; <span class="c">// ejecuta todos los validator</span></code></pre>
+<p>Los <code>TextEditingController</code> se liberan en <code>dispose()</code> para no dejar memoria ocupada. Mientras se envía, <code>_loading = true</code> desactiva el botón para que no se envíe dos veces. Si la API rechaza algo (por ejemplo un correo repetido), el mensaje de Spring se muestra en un SnackBar.</p>
+</section>
+
+<section id="tema">
+<h2>28. Tema, idiomas y responsive</h2>
+<h3>Tema</h3>
+<p><code>AppTheme.themeData()</code> define en un solo lugar los colores (negro, blanco hueso y naranja), las fuentes (Archivo e Inter con <code>google_fonts</code>) y el estilo de botones, tarjetas, campos, chips y menú. Las pantallas usan <code>Theme.of(context).colorScheme</code> en vez de colores fijos, por eso el modo oscuro funciona en todas.</p>
+<h3>Idiomas (i18n)</h3>
+<p>Los textos están en <code>lib/l10n/app_es.arb</code> y <code>app_en.arb</code> (JSON con clave → texto). <code>flutter gen-l10n</code> genera la clase <code>AppLocalizations</code>, y en las pantallas se usa <code>t.login</code>, <code>t.hello(nombre)</code>, etc. Soporta parámetros y plurales.</p>
+<h3>Responsive</h3>
+<ul>
+  <li><code>MediaQuery.sizeOf(context).width</code>: ≥ 900 px usa menú lateral; menos, cajón.</li>
+  <li><code>LayoutBuilder</code>: las tarjetas de estadísticas van de 2 o 4 por fila según el ancho.</li>
+  <li><code>SliverGridDelegateWithMaxCrossAxisExtent</code>: la grilla pone tantas columnas como quepan (máx. 260 px cada una).</li>
+  <li>El detalle del tenis pone imagen e información lado a lado en pantallas anchas y una debajo de otra en el celular.</li>
+</ul>
+</section>
+
+<section id="recorrido-flutter">
+<h2>29. Comprar, widget por widget</h2>
+<ol class="steps">
+  <li><strong>SneakersScreen</strong> hace <code>ref.watch(sneakersProvider)</code> → <code>SneakerService.findAll()</code> → <code>GET /sneakers</code> → lista de <code>Sneaker</code> → <code>AsyncView</code> dibuja la grilla de <code>SneakerCard</code>.</li>
+  <li>Tap en una tarjeta → <code>context.push('/admin/sneakers/1')</code> → <code>SneakerDetailScreen(id: 1)</code> → <code>sneakerProvider(1)</code> → <code>GET /sneakers/1</code>.</li>
+  <li>Elige talla (<code>ChoiceChip</code> → <code>setState(_size = 40)</code>) y cantidad (<code>QuantityStepper</code>).</li>
+  <li>“Agregar al carrito” → <code>ref.read(cartProvider.notifier).add(...)</code>. Si no hay stock devuelve <code>false</code> y sale un SnackBar de error. Si hay, cambia el estado y el badge del menú se actualiza solo.</li>
+  <li><strong>CartScreen</strong> hace <code>ref.watch(cartProvider)</code> y muestra las líneas y el total.</li>
+  <li>“Comprar” → <code>OrderService.create(items)</code> → <code>POST /orders</code> (con Bearer, lo pega el interceptor).</li>
+  <li>201 → <code>Order.fromJson</code> → <code>cart.clear()</code> → <code>ref.invalidate(ordersProvider)</code> y la lista de tenis (el stock cambió) → <code>context.go('/admin/orders/34')</code>.</li>
+  <li>Si fue 400 (otro cliente compró antes) → <code>apiErrorMessage()</code> muestra “Stock insuficiente para …” en un SnackBar.</li>
+</ol>
+</section>
+
+<!-- ============================ PARCIAL ============================ -->
+<h2 class="part-title"><span>PARTE 3</span>Para el parcial</h2>
+
+<section id="correr">
+<h2>30. Cómo correr y probar</h2>
+<h4>1. API (terminal en la carpeta <code>api</code>)</h4>
+<pre><code>cd api
+.\mvnw spring-boot:run          <span class="c"># espera "Started SneakHubApiApplication" · http://localhost:8081</span></code></pre>
+<p>Necesita Java 17 o superior. Si sale “The file is locked”, ya hay otra API corriendo: ciérrala.</p>
+<h4>2. App (otra terminal, en la raíz del proyecto)</h4>
+<pre><code>flutter pub get
+flutter run -d chrome           <span class="c"># o -d windows, o con un emulador abierto</span></code></pre>
+<h4>3. Usuarios</h4>
+<ul><li>Admin: <code>admin@sneakhub.com</code> / <code>admin123</code></li><li>Cliente: <code>cliente@sneakhub.com</code> / <code>cliente123</code></li></ul>
+<h4>4. Probar la API sin la app (PowerShell o Postman)</h4>
+<pre><code>curl http://localhost:8081/api/v1/sneakers
+curl -X POST http://localhost:8081/api/v1/auth/login -H "Content-Type: application/json" -d "{\"email\":\"admin@sneakhub.com\",\"password\":\"admin123\"}"
+curl http://localhost:8081/api/v1/orders -H "Authorization: Bearer EL_ACCESS_TOKEN"</code></pre>
+<h4>5. Pruebas y análisis de Flutter</h4>
+<pre><code>flutter analyze    <span class="c"># revisa errores y estilo</span>
+flutter test       <span class="c"># modelos, carrito y login</span></code></pre>
+<div class="box ok"><b>Demo sugerida para el profesor</b>1) Entra como cliente, filtra por marca, compra 2 pares. 2) Muestra en la consola H2 que el stock bajó. 3) Entra como admin, mira el pedido en el panel y cancélalo. 4) Muestra que el stock volvió. 5) Intenta como cliente abrir <code>/admin/brands</code>: te redirige. 6) Con curl, crea un tenis con el token del cliente → 403.</div>
+</section>
+
+<section id="preguntas">
+<h2>31. Preguntas que el profesor puede hacer</h2>
+<p class="lead">Ábrelas una por una e intenta responder antes de leer.</p>
+
+<h3>Spring y arquitectura</h3>
+<details class="q"><summary>¿Qué es Spring Boot y qué diferencia tiene con Spring?</summary><div>Spring es el framework (IoC, MVC, Data, Security…). Spring Boot lo hace fácil: starters, auto-configuración según lo que hay en el classpath, servidor Tomcat embebido y configuración en <code>application.properties</code>. La API se ejecuta como un programa normal con <code>main</code>.</div></details>
+<details class="q"><summary>¿Qué es la inversión de control y la inyección de dependencias?</summary><div>IoC: el framework controla la creación y el ciclo de vida de los objetos, no tu código. DI: las dependencias se entregan desde afuera. En el proyecto, por constructor: <code>OrderService</code> recibe <code>OrderRepository</code>, <code>UserRepository</code> y <code>SneakerService</code> sin hacer <code>new</code>.</div></details>
+<details class="q"><summary>¿Qué es un bean? ¿Cómo se crea?</summary><div>Un objeto administrado por el contenedor de Spring, singleton por defecto. Se crea anotando la clase (<code>@Service</code>, <code>@RestController</code>, <code>@Component</code>), con métodos <code>@Bean</code> en una clase <code>@Configuration</code> (como <code>PasswordEncoder</code> o <code>JwtEncoder</code>), o automáticamente para los repositorios.</div></details>
+<details class="q"><summary>¿El proyecto es MVC?</summary><div>Usa Spring MVC con arquitectura en capas: Controller → Service → Repository → BD. El controller es la C; el modelo está en services, repositories y entidades; la “vista” es el JSON (DTOs), y la interfaz real la dibuja Flutter.</div></details>
+<details class="q"><summary>¿Por qué separar controller y service?</summary><div>Responsabilidad única. El controller solo traduce HTTP ⇄ Java y valida la entrada; el service tiene las reglas (stock, permisos, transacciones) y no sabe nada de HTTP. Así las reglas se pueden reutilizar y probar sin servidor.</div></details>
+<details class="q"><summary>¿Diferencia entre @Controller y @RestController?</summary><div><code>@RestController</code> = <code>@Controller</code> + <code>@ResponseBody</code>: lo que devuelve el método se convierte en JSON en el cuerpo de la respuesta. <code>@Controller</code> solo se usa para devolver vistas HTML (por ejemplo con Thymeleaf).</div></details>
+<details class="q"><summary>¿Qué hace @SpringBootApplication?</summary><div>Junta <code>@Configuration</code>, <code>@EnableAutoConfiguration</code> y <code>@ComponentScan</code> (busca beans en <code>com.sneakhub.api</code> y subpaquetes).</div></details>
+<details class="q"><summary>¿Qué es un DTO y por qué no devuelven las entidades?</summary><div>Objeto solo para transportar datos. Evita exponer la contraseña, evita ciclos infinitos al pasar a JSON (Order ↔ OrderItem), permite cambiar la tabla sin romper el cliente y da una forma cómoda (subtotal, nombre del tenis). Son <code>record</code>.</div></details>
+<details class="q"><summary>¿Cómo se validan los datos que llegan?</summary><div>Con Bean Validation en los DTOs (<code>@NotBlank</code>, <code>@Email</code>, <code>@Positive</code>, <code>@NotEmpty</code>, <code>@Min</code>…) y <code>@Valid</code> en el controller. Si falla, Spring no ejecuta el método y el <code>GlobalExceptionHandler</code> responde 400 con los errores por campo. Las reglas de negocio (stock, duplicados) se validan en el service.</div></details>
+<details class="q"><summary>¿Cómo se manejan los errores?</summary><div>Los services lanzan <code>ApiException</code> con su código HTTP (<code>notFound</code>, <code>conflict</code>…). <code>@RestControllerAdvice</code> + <code>@ExceptionHandler</code> en <code>GlobalExceptionHandler</code> las atrapa todas y responde un JSON uniforme <code>{status, message, errors, timestamp}</code>.</div></details>
+<details class="q"><summary>¿Qué es @Transactional? ¿Qué pasa si falla a mitad?</summary><div>Ejecuta el método en una transacción: todo o nada. Si se lanza una excepción (por ejemplo sin stock en el tercer ítem), se hace rollback y no queda nada guardado. <code>readOnly = true</code> en consultas optimiza.</div></details>
+<details class="q"><summary>¿Por qué el método update no llama a save()?</summary><div>Por <em>dirty checking</em>: dentro de la transacción la entidad está administrada por Hibernate; al cambiar sus atributos, Hibernate genera el UPDATE automáticamente al hacer commit.</div></details>
+
+<h3>Base de datos y JPA</h3>
+<details class="q"><summary>¿Qué base de datos usa y cómo se creó?</summary><div>H2, embebida, en el archivo <code>api/data/sneakhub.mv.db</code>. H2 crea el archivo al conectarse por primera vez (URL <code>jdbc:h2:file:./data/sneakhub</code>), Spring Boot configura el DataSource, Hibernate crea las tablas desde las entidades con <code>ddl-auto=update</code> y el DataSeeder inserta los datos iniciales.</div></details>
+<details class="q"><summary>¿Qué diferencia hay entre JPA y Hibernate?</summary><div>JPA es la especificación (interfaces y anotaciones como <code>@Entity</code>, <code>@Id</code>). Hibernate es la implementación que genera el SQL y lo ejecuta. Spring Data JPA va encima y genera los repositorios.</div></details>
+<details class="q"><summary>¿Cómo funciona findByUserEmailOrderByCreatedAtDesc si nadie lo implementó?</summary><div>Spring Data analiza el nombre: <code>findBy</code> + propiedad <code>user.email</code> + <code>OrderBy createdAt Desc</code>, y genera la consulta con su JOIN al arrancar.</div></details>
+<details class="q"><summary>¿Qué relaciones hay entre las tablas?</summary><div>Sneaker → Brand y Sneaker → Category (<code>@ManyToOne</code>); Order → User (<code>@ManyToOne</code>); Order → OrderItem (<code>@OneToMany</code> con cascade); OrderItem → Sneaker (<code>@ManyToOne</code>). Tallas e imágenes son <code>@ElementCollection</code> (tablas <code>sneaker_sizes</code>, <code>sneaker_images</code>).</div></details>
+<details class="q"><summary>¿Por qué OrderItem guarda unitPrice si el tenis ya tiene precio?</summary><div>Para conservar el precio histórico. Si el admin cambia el precio, los pedidos anteriores deben mantener lo que el cliente pagó.</div></details>
+<details class="q"><summary>¿Por qué no se puede borrar un tenis con pedidos?</summary><div>Los <code>order_items</code> tienen una llave foránea hacia él; borrarlo rompería el historial. El service lo verifica con <code>existsBySneakerId</code> y responde 409. La alternativa es poner el stock en 0.</div></details>
+<details class="q"><summary>¿Qué cambiarías para usar MySQL?</summary><div>La dependencia (<code>mysql-connector-j</code> en vez de <code>h2</code>) y la URL, usuario y clave en <code>application.properties</code>, además de crear la base vacía en MySQL. El código Java no cambia.</div></details>
+<details class="q"><summary>Dos clientes compran el último par a la vez: ¿qué pasa?</summary><div>Las dos transacciones podrían leer stock 1 y el stock quedaría en −1. Se soluciona con bloqueo optimista (<code>@Version</code> en <code>Sneaker</code>) o pesimista (<code>@Lock</code> en la consulta). Hoy el proyecto no lo implementa; es una buena mejora para mencionar.</div></details>
+
+<h3>Seguridad</h3>
+<details class="q"><summary>¿Qué es un JWT y qué lleva el de SneakHub?</summary><div>Un token firmado <code>header.payload.firma</code>. Lleva <code>sub</code> (correo), <code>role</code>, <code>type</code> (access o refresh), <code>iss</code>, <code>iat</code> y <code>exp</code>. Se firma con HS256 y la clave secreta; si se modifica, la firma no coincide.</div></details>
+<details class="q"><summary>¿Por qué es “stateless”?</summary><div>El servidor no guarda sesiones: cada petición trae el token con toda la información necesaria y basta con verificar la firma. Escala mejor y no necesita cookies (por eso se desactiva CSRF).</div></details>
+<details class="q"><summary>¿Para qué el refresh token?</summary><div>El access dura 60 minutos para que, si lo roban, sirva poco. El refresh (7 días) solo sirve para pedir tokens nuevos en <code>/auth/refresh</code>, así el usuario no tiene que volver a iniciar sesión. Un validador impide usar uno en lugar del otro.</div></details>
+<details class="q"><summary>¿Cómo se protege una ruta por rol?</summary><div>En <code>SecurityConfig</code>: <code>.requestMatchers(CATALOG).hasRole("ADMIN")</code>. El converter lee el claim <code>role</code> y crea la autoridad <code>ROLE_ADMIN</code>. En los pedidos, el service además revisa que el cliente solo vea los suyos (403).</div></details>
+<details class="q"><summary>Diferencia entre 401 y 403</summary><div>401: no autenticado (sin token, token inválido o vencido, credenciales malas). 403: autenticado pero sin permiso (cliente creando un tenis).</div></details>
+<details class="q"><summary>¿Cómo se guardan las contraseñas?</summary><div>Con BCrypt (<code>passwordEncoder.encode</code>): hash lento con sal, no reversible. En el login se compara con <code>matches</code>.</div></details>
+<details class="q"><summary>¿Qué es CORS y por qué se configuró?</summary><div>Es una regla del navegador que bloquea peticiones a otro origen salvo que el servidor lo permita. Flutter Web corre en otro puerto que la API, por eso <code>corsConfigurationSource</code> lo permite.</div></details>
+
+<h3>Flutter</h3>
+<details class="q"><summary>¿Cómo consume la app la API?</summary><div>Con Dio. <code>ApiConfig</code> tiene la URL base; <code>ApiClient</code> tiene una instancia de Dio con un interceptor que agrega el Bearer y renueva el token ante un 401; los services hacen <code>get/post/put/patch/delete</code> y convierten el JSON con <code>fromJson</code>.</div></details>
+<details class="q"><summary>¿Qué es un interceptor y qué hace el del proyecto?</summary><div>Código que se ejecuta en cada petición o respuesta. El del proyecto pega el token (menos en login, register y refresh) y, si llega 401, llama a <code>/auth/refresh</code>, guarda los tokens nuevos y repite la petición; si no puede, limpia la sesión y manda al login.</div></details>
+<details class="q"><summary>¿StatelessWidget vs StatefulWidget?</summary><div>Stateless no cambia por sí mismo; Stateful tiene estado interno y se redibuja con <code>setState</code>. El estado compartido entre pantallas se maneja con Riverpod.</div></details>
+<details class="q"><summary>¿Qué es un provider? ¿watch vs read?</summary><div>Un contenedor de estado global de Riverpod. <code>watch</code> lee y se suscribe (el widget se redibuja si cambia), se usa en <code>build</code>. <code>read</code> lee una vez, se usa en eventos como <code>onPressed</code>. <code>invalidate</code> fuerza a recargar.</div></details>
+<details class="q"><summary>¿Cómo se actualiza el catálogo cuando cambias un filtro?</summary><div><code>sneakersProvider</code> hace <code>ref.watch(sneakerFilterProvider)</code>. Al cambiar el filtro se recalcula, llama a la API con los query params nuevos y la pantalla (que observa el provider) se redibuja.</div></details>
+<details class="q"><summary>¿Qué son Future, async y await?</summary><div>Un Future es un valor que llegará después (la respuesta HTTP). <code>await</code> espera sin congelar la interfaz y solo se puede usar dentro de funciones <code>async</code>.</div></details>
+<details class="q"><summary>¿Cómo protege la app las rutas?</summary><div>El <code>redirect</code> de go_router lee el rol del JWT guardado: sin sesión manda al login; un cliente no entra a marcas, categorías ni al formulario; el admin no tiene carrito. La seguridad real igual está en la API.</div></details>
+<details class="q"><summary>¿Dónde se guarda el token? ¿Por qué no en shared_preferences?</summary><div>En <code>flutter_secure_storage</code>, que cifra los datos. shared_preferences es texto plano y solo se usa para el tema y el idioma.</div></details>
+<details class="q"><summary>¿Por qué validar el stock en la app si la API ya lo valida?</summary><div>Para dar respuesta inmediata al usuario sin esperar a la red. Pero la validación que vale es la del servidor: nunca se confía en el cliente.</div></details>
+<details class="q"><summary>¿Por qué el emulador usa 10.0.2.2?</summary><div>En el emulador, <code>localhost</code> es el emulador mismo; <code>10.0.2.2</code> es la dirección especial que apunta al PC donde corre la API.</div></details>
+<details class="q"><summary>¿Cómo funciona el cambio de idioma?</summary><div>Archivos <code>.arb</code> por idioma → <code>flutter gen-l10n</code> genera <code>AppLocalizations</code>. <code>languageProvider</code> guarda el <code>Locale</code> (persistido en shared_preferences) y <code>MaterialApp</code> lo usa.</div></details>
+</section>
+
+<section id="glosario">
+<h2>32. Glosario</h2>
+<div class="tw"><table>
+<tr><th>Término</th><th>Significado corto</th></tr>
+<tr><td>API REST</td><td>Servidor que expone recursos (tenis, pedidos) por URLs y métodos HTTP, y responde JSON.</td></tr>
+<tr><td>Endpoint</td><td>Una combinación método + ruta, ej. <code>GET /api/v1/sneakers</code>.</td></tr>
+<tr><td>JSON</td><td>Formato de texto para intercambiar datos: <code>{"name":"Nike"}</code>.</td></tr>
+<tr><td>Jackson</td><td>Librería que Spring usa para convertir JSON ⇄ objetos Java.</td></tr>
+<tr><td>Bean / Contenedor</td><td>Objeto administrado por Spring / la “caja” que los crea y guarda.</td></tr>
+<tr><td>IoC / DI</td><td>El framework controla los objetos / las dependencias se entregan desde afuera.</td></tr>
+<tr><td>ORM</td><td>Mapear objetos a tablas (JPA + Hibernate).</td></tr>
+<tr><td>Entidad</td><td>Clase <code>@Entity</code> que representa una tabla.</td></tr>
+<tr><td>Repositorio</td><td>Interfaz de acceso a datos (Spring Data la implementa).</td></tr>
+<tr><td>JPQL</td><td>Lenguaje de consultas de JPA con nombres de clases, no de tablas.</td></tr>
+<tr><td>Transacción / Rollback</td><td>Grupo de operaciones todo-o-nada / deshacer si algo falla.</td></tr>
+<tr><td>Dirty checking</td><td>Hibernate detecta cambios en entidades y los guarda solo.</td></tr>
+<tr><td>DDL</td><td>SQL que crea la estructura (<code>CREATE TABLE</code>). <code>ddl-auto</code> lo genera.</td></tr>
+<tr><td>JWT / Claim</td><td>Token firmado / cada dato dentro del token (sub, role, exp).</td></tr>
+<tr><td>Bearer</td><td>Forma de mandar el token: <code>Authorization: Bearer xxx</code>.</td></tr>
+<tr><td>BCrypt</td><td>Algoritmo de hash para contraseñas.</td></tr>
+<tr><td>CORS</td><td>Permiso del servidor para que un navegador llame desde otro origen.</td></tr>
+<tr><td>Widget</td><td>Pieza de interfaz en Flutter.</td></tr>
+<tr><td>Provider</td><td>Contenedor de estado en Riverpod.</td></tr>
+<tr><td>Interceptor</td><td>Código que se ejecuta en cada petición o respuesta de Dio.</td></tr>
+<tr><td>Debounce</td><td>Esperar a que el usuario deje de escribir antes de buscar.</td></tr>
+<tr><td>Seeder</td><td>Código que inserta datos iniciales.</td></tr>
+</table></div>
+</section>
+
+<section id="chuleta">
+<h2>33. Chuleta de anotaciones y piezas</h2>
+<div class="grid2">
+<div>
+<h4>Spring</h4>
+<div class="tw"><table>
+<tr><td><code>@SpringBootApplication</code></td><td>Clase principal</td></tr>
+<tr><td><code>@RestController</code></td><td>Controller que responde JSON</td></tr>
+<tr><td><code>@RequestMapping</code></td><td>Prefijo de ruta</td></tr>
+<tr><td><code>@GetMapping</code> … <code>@DeleteMapping</code></td><td>Método HTTP + ruta</td></tr>
+<tr><td><code>@PathVariable</code> / <code>@RequestParam</code> / <code>@RequestBody</code></td><td>Dato de la ruta / del query / del cuerpo</td></tr>
+<tr><td><code>@ResponseStatus</code></td><td>Código de respuesta (201, 204)</td></tr>
+<tr><td><code>@Valid</code></td><td>Validar el DTO</td></tr>
+<tr><td><code>@Service</code> / <code>@Component</code></td><td>Bean de negocio / genérico</td></tr>
+<tr><td><code>@Configuration</code> + <code>@Bean</code></td><td>Fábrica de beans</td></tr>
+<tr><td><code>@Value("${...}")</code></td><td>Leer una propiedad</td></tr>
+<tr><td><code>@Transactional</code></td><td>Todo o nada</td></tr>
+<tr><td><code>@RestControllerAdvice</code> + <code>@ExceptionHandler</code></td><td>Manejo global de errores</td></tr>
+<tr><td><code>@Entity</code>, <code>@Table</code>, <code>@Id</code>, <code>@GeneratedValue</code>, <code>@Column</code></td><td>Mapeo a tabla</td></tr>
+<tr><td><code>@ManyToOne</code>, <code>@OneToMany</code>, <code>@JoinColumn</code>, <code>@ElementCollection</code></td><td>Relaciones</td></tr>
+<tr><td><code>@Enumerated(STRING)</code></td><td>Enum como texto</td></tr>
+<tr><td><code>@Query</code> + <code>@Param</code></td><td>Consulta JPQL propia</td></tr>
+<tr><td><code>@NotBlank</code>, <code>@NotNull</code>, <code>@Email</code>, <code>@Positive</code>, <code>@Min</code>, <code>@Size</code></td><td>Validaciones</td></tr>
+<tr><td><code>@JsonProperty</code></td><td>Nombre del campo en JSON</td></tr>
+</table></div>
+</div>
+<div>
+<h4>Flutter</h4>
+<div class="tw"><table>
+<tr><td><code>runApp</code></td><td>Arranca la app</td></tr>
+<tr><td><code>MaterialApp.router</code></td><td>App con tema, idioma y router</td></tr>
+<tr><td><code>Scaffold</code>, <code>AppBar</code></td><td>Estructura de pantalla</td></tr>
+<tr><td><code>Column</code>, <code>Row</code>, <code>Stack</code>, <code>Expanded</code></td><td>Disposición</td></tr>
+<tr><td><code>ListView</code>, <code>GridView</code></td><td>Listas con scroll</td></tr>
+<tr><td><code>Form</code>, <code>TextFormField</code>, <code>validator</code></td><td>Formularios</td></tr>
+<tr><td><code>setState</code></td><td>Redibujar estado local</td></tr>
+<tr><td><code>ConsumerWidget</code> + <code>ref</code></td><td>Widget que lee providers</td></tr>
+<tr><td><code>FutureProvider</code>, <code>NotifierProvider</code></td><td>Estado asíncrono / modificable</td></tr>
+<tr><td><code>ref.watch</code> / <code>read</code> / <code>invalidate</code></td><td>Observar / leer / recargar</td></tr>
+<tr><td><code>AsyncValue.when</code></td><td>loading / error / data</td></tr>
+<tr><td><code>GoRouter</code>, <code>ShellRoute</code>, <code>redirect</code></td><td>Rutas, layout, guardia</td></tr>
+<tr><td><code>context.go</code> / <code>push</code> / <code>pop</code></td><td>Navegar</td></tr>
+<tr><td><code>Dio</code>, <code>Interceptor</code></td><td>HTTP y token</td></tr>
+<tr><td><code>fromJson</code></td><td>JSON → objeto</td></tr>
+<tr><td><code>Future</code>, <code>async</code>, <code>await</code></td><td>Asincronía</td></tr>
+</table></div>
+</div>
+</div>
+</section>
+
+</main>
+</div>
+
+<footer>SneakHub · Guía de estudio del Parcial 2</footer>
+
+<button class="theme-btn" id="themeBtn" type="button">◐ Tema</button>
+<script>
+(function(){
+  var root = document.documentElement, btn = document.getElementById('themeBtn');
+  try { var saved = localStorage.getItem('guia-theme'); if (saved) root.setAttribute('data-theme', saved); } catch (e) {}
+  btn.addEventListener('click', function(){
+    var current = root.getAttribute('data-theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    var next = current === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('guia-theme', next); } catch (e) {}
+  });
+  // En celular, el índice empieza cerrado y se cierra al elegir una sección.
+  if (window.innerWidth < 1000) document.querySelector('nav.toc details').removeAttribute('open');
+  document.querySelectorAll('nav.toc a').forEach(function(a){
+    a.addEventListener('click', function(){
+      if (window.innerWidth < 1000) document.querySelector('nav.toc details').removeAttribute('open');
+    });
+  });
+})();
+</script>
+</body>
+</html>
