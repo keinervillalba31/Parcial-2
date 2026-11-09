@@ -23,6 +23,7 @@ String apiErrorMessage(Object error, AppLocalizations t) {
   if (status == 403) return t.errorForbidden;
   if (status != null) return t.errorServer(status);
   if (error.type == DioExceptionType.connectionTimeout ||
+      error.type == DioExceptionType.sendTimeout ||
       error.type == DioExceptionType.receiveTimeout) {
     return t.errorTimeout;
   }

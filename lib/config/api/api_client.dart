@@ -13,8 +13,9 @@ class ApiClient {
 
   static BaseOptions get _options => BaseOptions(
     baseUrl: ApiConfig.baseUrl,
-    connectTimeout: const Duration(seconds: 10),
-    receiveTimeout: const Duration(seconds: 10),
+    // Con internet lento la petición espera hasta 15 s antes de dar error.
+    connectTimeout: const Duration(seconds: 15),
+    receiveTimeout: const Duration(seconds: 15),
   );
 
   static final Dio dio = Dio(_options)..interceptors.add(_AuthInterceptor());
@@ -53,7 +54,15 @@ class _AuthInterceptor extends QueuedInterceptor {
     // Si otra petición de la cola ya renovó el token, basta con reintentar.
     var token = await storage.read(key: StorageKeys.token);
     if (token == null || request.headers['Authorization'] == 'Bearer $token') {
-      token = await _refresh();
+      final DioException? refreshError;
+      (token, refreshError) = await _refresh();
+
+      // Sin internet o API caída: no se cierra la sesión, se muestra el
+      // error de conexión y el usuario puede reintentar.
+      if (refreshError != null && _isNetworkError(refreshError)) {
+        handler.next(refreshError);
+        return;
+      }
     }
 
     if (token == null) {
@@ -72,9 +81,10 @@ class _AuthInterceptor extends QueuedInterceptor {
   }
 
   /// Devuelve el nuevo access token, o `null` si el refresh no es válido.
-  Future<String?> _refresh() async {
+  /// Si falla la petición también devuelve el error para saber si fue la red.
+  Future<(String?, DioException?)> _refresh() async {
     final refresh = await storage.read(key: StorageKeys.refreshToken);
-    if (refresh == null || refresh.isEmpty) return null;
+    if (refresh == null || refresh.isEmpty) return (null, null);
     try {
       final response = await _plain.post(
         ApiConfig.refresh,
@@ -82,9 +92,12 @@ class _AuthInterceptor extends QueuedInterceptor {
       );
       final auth = AuthModel.fromJson(response.data);
       await saveTokens(auth);
-      return auth.accessToken;
-    } on DioException {
-      return null;
+      return (auth.accessToken, null);
+    } on DioException catch (e) {
+      return (null, e);
     }
   }
+
+  /// Error sin respuesta de la API (sin internet, timeout, servidor apagado).
+  static bool _isNetworkError(DioException e) => e.response == null;
 }

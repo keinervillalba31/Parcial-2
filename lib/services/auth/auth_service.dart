@@ -42,5 +42,16 @@ class AuthService {
     return decodeJwtPayload(token)['role'] as String? ?? '';
   }
 
-  static Future<void> logout() => clearTokens();
+  /// Borra los tokens del dispositivo y revoca el refresh token en la API.
+  /// La revocación va en segundo plano: sin internet (o con internet lento)
+  /// la sesión se cierra igual al instante y el token vencerá solo.
+  static Future<void> logout() async {
+    final refresh = await storage.read(key: StorageKeys.refreshToken);
+    await clearTokens();
+    if (refresh == null || refresh.isEmpty) return;
+    // ignore(): si falla (sin internet) no se espera ni se reporta el error.
+    ApiClient.dio
+        .post(ApiConfig.logout, data: {'refresh_token': refresh})
+        .ignore();
+  }
 }

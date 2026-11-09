@@ -34,6 +34,13 @@ public class AuthController {
         return authService.refresh(request.refreshToken());
     }
 
+    /** Revoca el refresh token para que no se pueda volver a usar. */
+    @PostMapping("/logout")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void logout(@Valid @RequestBody RefreshRequest request) {
+        authService.logout(request.refreshToken());
+    }
+
     /** Usuario dueño del token (el "name" de la autenticación es el correo). */
     @GetMapping("/profile")
     public UserResponse profile(Authentication authentication) {

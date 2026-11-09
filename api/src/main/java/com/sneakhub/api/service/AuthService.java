@@ -9,7 +9,6 @@ import com.sneakhub.api.entity.User;
 import com.sneakhub.api.exception.ApiException;
 import com.sneakhub.api.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +25,7 @@ public class AuthService {
         this.tokenService = tokenService;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public AuthResponse login(LoginRequest request) {
         User user = users.findByEmail(request.email().trim().toLowerCase())
                 .filter(u -> passwordEncoder.matches(request.password(), u.getPassword()))
@@ -48,17 +47,17 @@ public class AuthService {
         return tokensFor(user);
     }
 
-    @Transactional(readOnly = true)
+    /** Cambia un refresh token válido por un par nuevo; el usado queda revocado. */
+    @Transactional
     public AuthResponse refresh(String refreshToken) {
-        String email;
-        try {
-            email = tokenService.validateRefreshToken(refreshToken);
-        } catch (JwtException e) {
-            throw ApiException.unauthorized("Refresh token inválido o vencido");
-        }
-        User user = users.findByEmail(email)
-                .orElseThrow(() -> ApiException.unauthorized("El usuario ya no existe"));
+        User user = tokenService.consumeRefreshToken(refreshToken)
+                .orElseThrow(() -> ApiException.unauthorized("Refresh token inválido o vencido"));
         return tokensFor(user);
+    }
+
+    @Transactional
+    public void logout(String refreshToken) {
+        tokenService.revokeRefreshToken(refreshToken);
     }
 
     @Transactional(readOnly = true)

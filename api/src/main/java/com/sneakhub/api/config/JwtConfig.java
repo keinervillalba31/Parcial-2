@@ -16,6 +16,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * Configura cómo se firman (encoder) y se validan (decoder) los JWT.
  * Se usa una clave secreta HMAC-SHA256 definida en application.properties.
+ * Los refresh tokens no son JWT: ver TokenService.
  */
 @Configuration
 public class JwtConfig {
@@ -23,7 +24,6 @@ public class JwtConfig {
     public static final String CLAIM_ROLE = "role";
     public static final String CLAIM_TYPE = "type";
     public static final String TYPE_ACCESS = "access";
-    public static final String TYPE_REFRESH = "refresh";
 
     @Bean
     public SecretKey jwtSecretKey(@Value("${app.jwt.secret}") String secret) {
@@ -38,14 +38,10 @@ public class JwtConfig {
     /** Decoder que usa Spring Security en cada petición: solo acepta tokens de tipo "access". */
     @Bean
     public JwtDecoder jwtDecoder(SecretKey key) {
-        return decoderFor(key, TYPE_ACCESS);
-    }
-
-    public static JwtDecoder decoderFor(SecretKey key, String tokenType) {
         NimbusJwtDecoder decoder = NimbusJwtDecoder.withSecretKey(key)
                 .macAlgorithm(MacAlgorithm.HS256)
                 .build();
-        OAuth2TokenValidator<Jwt> typeValidator = new JwtClaimValidator<String>(CLAIM_TYPE, tokenType::equals);
+        OAuth2TokenValidator<Jwt> typeValidator = new JwtClaimValidator<String>(CLAIM_TYPE, TYPE_ACCESS::equals);
         decoder.setJwtValidator(new DelegatingOAuth2TokenValidator<>(JwtValidators.createDefault(), typeValidator));
         return decoder;
     }

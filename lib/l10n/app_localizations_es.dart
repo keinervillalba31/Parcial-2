@@ -425,10 +425,12 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get errorTimeout => 'Tiempo de conexión agotado.';
+  String get errorTimeout =>
+      'La conexión está muy lenta y el servidor no respondió a tiempo. Intenta de nuevo.';
 
   @override
-  String get errorNetwork => 'No se pudo conectar con la API. ¿Está encendida?';
+  String get errorNetwork =>
+      'Sin conexión con el servidor. Revisa tu internet e intenta de nuevo.';
 
   @override
   String get errorUnexpected => 'Ocurrió un error inesperado.';

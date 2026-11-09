@@ -17,6 +17,7 @@ class ApiConfig {
   static const String login = '/auth/login';
   static const String register = '/auth/register';
   static const String refresh = '/auth/refresh';
+  static const String logout = '/auth/logout';
   static const String profile = '/auth/profile';
   static const String sneakers = '/sneakers';
   static const String brands = '/brands';
@@ -25,5 +26,5 @@ class ApiConfig {
 
   /// Endpoints a los que nunca se les manda el token: si llevaran uno vencido,
   /// Spring Security respondería 401 aunque la ruta sea pública.
-  static const Set<String> publicAuth = {login, register, refresh};
+  static const Set<String> publicAuth = {login, register, refresh, logout};
 }

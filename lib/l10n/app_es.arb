@@ -202,8 +202,8 @@
       }
     }
   },
-  "errorTimeout": "Tiempo de conexión agotado.",
-  "errorNetwork": "No se pudo conectar con la API. ¿Está encendida?",
+  "errorTimeout": "La conexión está muy lenta y el servidor no respondió a tiempo. Intenta de nuevo.",
+  "errorNetwork": "Sin conexión con el servidor. Revisa tu internet e intenta de nuevo.",
   "errorUnexpected": "Ocurrió un error inesperado.",
   "heroTag": "Nueva temporada",
   "heroTitle": "ENCUENTRA\nTU PRÓXIMO\nPAR.",

@@ -425,10 +425,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get errorTimeout => 'Connection timed out.';
+  String get errorTimeout =>
+      'The connection is too slow and the server didn\'t respond in time. Try again.';
 
   @override
-  String get errorNetwork => 'Couldn\'t reach the API. Is it running?';
+  String get errorNetwork =>
+      'Can\'t reach the server. Check your internet connection and try again.';
 
   @override
   String get errorUnexpected => 'Something went wrong.';

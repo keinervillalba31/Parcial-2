@@ -851,13 +851,13 @@ abstract class AppLocalizations {
   /// No description provided for @errorTimeout.
   ///
   /// In es, this message translates to:
-  /// **'Tiempo de conexión agotado.'**
+  /// **'La conexión está muy lenta y el servidor no respondió a tiempo. Intenta de nuevo.'**
   String get errorTimeout;
 
   /// No description provided for @errorNetwork.
   ///
   /// In es, this message translates to:
-  /// **'No se pudo conectar con la API. ¿Está encendida?'**
+  /// **'Sin conexión con el servidor. Revisa tu internet e intenta de nuevo.'**
   String get errorNetwork;
 
   /// No description provided for @errorUnexpected.
